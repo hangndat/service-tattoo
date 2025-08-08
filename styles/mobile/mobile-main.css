@@ -1,0 +1,224 @@
+/* Mobile styles - consolidated mobile rules */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  .hero-section {
+    border-left: none !important;
+  }
+  
+  /* Consolidated layout rules */
+  html, body,
+  #content-container, .content-container,
+  .hero-section, .gallery-section, .artists-section, .contact-section {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  #mobileArrowBtn {
+    display: none !important;
+  }
+}
+
+.mobile-dropdown-menu {
+  display: block;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(-8px);
+  transition:
+    max-height 0.32s cubic-bezier(.4,0,.2,1),
+    opacity 0.22s cubic-bezier(.4,0,.2,1),
+    transform 0.32s cubic-bezier(.4,0,.2,1);
+  background: #181818;
+  border-radius: 10px;
+  margin: 0 0 12px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  padding: 0;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  /* font-family inherited from main.css */
+  pointer-events: none;
+  will-change: max-height, opacity, transform;
+}
+.mobile-dropdown-menu.open {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+  border: none;
+  transform: translateY(0);
+}
+.mobile-dropdown-item {
+  padding: 16px 24px;
+  color: #fff;
+  font-size: 17px;
+  /* font-family inherited from main.css */
+  font-weight: 500;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #232323;
+  background: transparent;
+  transition: background 0.18s, color 0.18s;
+  letter-spacing: 0.5px;
+}
+.mobile-dropdown-item:last-child {
+  border-bottom: none;
+}
+.mobile-dropdown-item:active,
+.mobile-dropdown-item:hover {
+  background: #222;
+  color: #ff5252;
+}
+.mobile-dropdown-menu .mobile-dropdown-item.active {
+  color: #ff5252 !important;
+  font-weight: 700;
+  background: #232323;
+} 
+
+/* Mobile hero-image rules */
+@media (max-width: 768px) {
+  /* Mobile hero-image - ngang sát mép, dọc giữ nguyên */
+  .hero-image {
+    width: 100% !important;
+    height: 245px !important;
+    min-height: 245px !important;
+    margin: 0 !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  
+  .hero-image img {
+    width: 100% !important;
+    height: 80% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+  
+  /* Mobile banner navigation - HIDE DOTS ON MOBILE */
+  .hero-image .banner-nav {
+    display: none !important;
+  }
+} 
+
+@media (max-width: 768px) {
+  .hero-info.contact-info {
+    padding: 35px 40px !important;
+    min-height: 180px;
+  }
+  .hero-info.contact-info .contact-heading {
+    font-size: 2rem !important;
+    margin-bottom: 20px;
+  }
+  .hero-info.contact-info .contact-text {
+    font-size: 0.95rem !important;
+  }
+  .contact-block.contact-map {
+    aspect-ratio: unset !important;
+    min-height: 350px !important;
+    height: 350px !important;
+    max-height: 60vw;
+  }
+  .contact-block.contact-map iframe {
+    min-height: 350px !important;
+    height: 100% !important;
+    max-height: 60vw;
+  }
+}
+
+/* Mobile footer BOOK NOW button */
+.mobile-footer-book-now {
+  display: none; /* Hidden by default */
+}
+
+@media (max-width: 768px) {
+  .mobile-footer-book-now {
+    display: block;
+    background: #181818;
+    padding: 0;
+    text-align: center;
+    border-top: 1px solid #232323;
+  }
+  
+  .book-now-btn-mobile-footer {
+    background: #fff;
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    width: 100%;
+    padding: 24px 0;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+    animation: slideInFromLeft 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+
+  
+  .book-now-btn-mobile-footer:active {
+    background: #fff;
+    color: #000;
+  }
+  
+  /* Mobile Artists page - banner layout */
+  .artist-section .hero-image {
+    width: 100% !important;
+    height: 245px !important;
+    min-height: 245px !important;
+    margin: 0 !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 20px 0 0 0 !important;
+  }
+  
+  /* Nuclear option - override hoàn toàn artists-content.css */
+  .artist-section .hero-image img,
+  .artist-section .hero-image img:first-child,
+  .artist-section .hero-image img.active,
+  .hero-section.hero-artists .hero-image img,
+  .hero-section.hero-artists .hero-image img:first-child,
+  .hero-section.hero-artists .hero-image img.active {
+    width: 100% !important;
+    height: 85% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0px 8px 0px 8px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+} 

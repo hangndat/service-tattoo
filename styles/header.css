@@ -1,0 +1,97 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /* background: linear-gradient(90deg, #000 0%, #000 17%, #ff3333 17%, #ff3333 100%); */
+    display: flex;
+    align-items: center;
+    height: 80px;
+    border: 0.5px solid white;
+    /* Optimize for performance */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* .logo-image {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+} */
+
+.logo-image {
+    filter: grayscale(0%);
+    transition: filter 0.3s ease;
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-image:hover {
+    filter: grayscale(100%);
+    cursor: pointer;
+}
+
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    padding-left: 40px;
+    flex: 1;
+    /* Optimize for performance */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* .nav-menu li {
+    margin-right: 10px;
+} */
+
+/* Font family inherited from main.css body rule */
+.header, .nav-menu, .nav-menu a, .datetime {
+    font-weight: 400;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    padding: 0 24px;
+    border-radius: 0;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    border: 1px solid transparent;
+    transform: translateZ(0);
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+    color: white;
+    background-color: #FF2020;
+    border-top: 0.5px solid white;
+    border-bottom: 0.5px solid white;
+}
+
+.datetime {
+    margin-right: 25px;
+    font-size: 13px;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+
+
+

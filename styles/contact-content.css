@@ -1,0 +1,258 @@
+/* Font family inherited from main.css body rule */
+
+.contact-heading, .hero-title, .contact-tab-btn, .review-placeholder {
+    font-weight: 400;
+}
+
+.animate-title, .animate-description {
+    will-change: auto;
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+    height: calc(100vh - 80px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-left: 0.5px solid white;
+    position: relative;
+    background-color: #000;
+}
+
+.hero-section.hero-contact {
+  min-height: calc(100vh - 80px); /* 80px là chiều cao header */
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.contact-info {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.contact-block {
+    background-color: #000;
+    padding: 0;
+    position: relative;
+}
+
+
+.hero-section.hero-contact .contact-info .contact-heading {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #FFFFFFB2 !important;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.contact-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+}
+
+/* Hero content styles (identical to content.css) */
+.hero-content {
+    background-color: #000;
+    padding: 1px 20px 0px 20px;
+    min-height: 120px;
+    border-bottom: 0.5px solid white;
+    border-top: 0.5px solid white;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    flex: 1; /* Match other pages' hero-content flex ratio */
+}
+
+.hero-description {
+    font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 25px;
+    max-width: min(650px, 100%);
+    font-weight: 300;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.gallery-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(0.8rem, 1.1vw, 0.9375rem);
+    font-weight: 500;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.gallery-arrow {
+    margin-left: 15px;
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+    color: #ff3333;
+    font-weight: bold;
+}
+
+
+.contact-text a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    margin: 0 5px;
+    transition: color 0.2s ease;
+}
+
+.contact-text a:hover {
+    color: #FF2020;
+}
+
+
+/* Contact Page Specific Styles */
+.contact-map {
+    width: 100%;
+    height: 100%;
+}
+
+.contact-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.contact-review {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-placeholder {
+    color: #ccc;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 300;
+    padding: 40px 0;
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: none;
+}
+.slide-in-left.is-animated {
+  animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* --- Tab button styles for contact page --- */
+.contact-tab-btn {
+    display: block;
+    width: 100%;
+    padding: 16px 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s, color 0.2s;
+}
+.contact-tab-btn:hover {
+    background: rgba(255,255,255,0.07);
+    color: #FF2020;
+}
+.contact-tab-btn.active {
+    background: #181818;
+    color: #FF2020;
+}
+
+/* Google Map block fill height - BEST PRACTICE, CLEAN, OPTIMIZED */
+.contact-block.contact-map {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #000;
+  width: 100%;
+  aspect-ratio: 16/9;
+  transition: aspect-ratio 0.3s, height 0.3s, width 0.3s;
+}
+
+.contact-block.contact-map iframe {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  transition: height 0.3s, width 0.3s;
+}
+
+/* Contact heading styles - consolidated */
+.contact-info .contact-heading {
+    font-size: 2rem !important;
+    font-weight: 300 !important;
+    color: #FFFFFFB2 !important;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Đảm bảo Google Map fill hoàn toàn container */
+.contact-info:has(.contact-map) {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Ensure Contact Us page layout matches other pages */
+.hero-section.hero-contact {
+    flex-direction: column;
+}
+
+.hero-section.hero-contact .hero-info {
+    flex: 3 !important; /* Match hero-image flex ratio from other pages */
+}
+
+.hero-section.hero-contact .hero-content {
+    flex: 1 !important; /* Match hero-content flex ratio from other pages */
+}
+
+/* Override any potential responsive conflicts for desktop */
+@media (min-width: 1024px) {
+    .hero-section.hero-contact .hero-info {
+        flex: 3 !important;
+    }
+    
+    .hero-section.hero-contact .hero-content {
+        flex: 1 !important;
+    }
+}
+

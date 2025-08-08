@@ -1,0 +1,113 @@
+<aside class="vertical-menu" id="verticalMenu">
+    <!-- Main Menu Items (hidden on specific pages) -->
+    <div class="main-menu-items">
+        <div class="menu-item" data-section="studio">
+            <span class="menu-number">01</span>
+            <span class="menu-text">STUDIO</span>
+        </div>
+        <div class="menu-item" data-section="artists">
+            <span class="menu-number">02</span>
+            <span class="menu-text">ARTISTS</span>
+        </div>
+        <div class="menu-item" data-section="gallery">
+            <span class="menu-number">03</span>
+            <span class="menu-text">GALLERY</span>
+        </div>
+        <div class="menu-item" data-section="flash">
+            <span class="menu-number">04</span>
+            <span class="menu-text">SALE FLASH</span>
+        </div>
+        <div class="menu-item" data-section="contact">
+            <span class="menu-number">05</span>
+            <span class="menu-text">CONTACT US</span>
+        </div>
+    </div>
+
+    <!-- Contact Page Specific Menu Items -->
+    <div class="contact-menu-items" style="display: none;">
+        <div class="menu-item" data-section="contact-form">
+            <span class="menu-number">01</span>
+            <span class="menu-text">CONTACT US</span>
+        </div>
+        <div class="menu-item" data-section="google-map">
+            <span class="menu-number">02</span>
+            <span class="menu-text">GOOGLE MAP</span>
+        </div>
+        <div class="menu-item" data-section="review">
+            <span class="menu-number">03</span>
+            <span class="menu-text">REVIEW US</span>
+        </div>
+    </div>
+
+    <!-- Artists Page Specific Menu Items -->
+    <div class="artists-menu-items" style="display: none;">
+        <div class="menu-item" data-section="banh">
+            <span class="menu-number">01</span>
+            <span class="menu-text">BANH</span>
+        </div>
+        <div class="menu-item" data-section="nam-n2n">
+            <span class="menu-number">02</span>
+            <span class="menu-text">NAM - N2N</span>
+        </div>
+        <div class="menu-item" data-section="trinh-reklezz">
+            <span class="menu-number">03</span>
+            <span class="menu-text">TRINH- REKLEZZ</span>
+        </div>
+    </div>
+
+    <!-- Gallery Page Specific Menu Items: Tab selector -->
+    <div class="gallery-tab-selector" style="display: none;">
+        <div class="gallery-tab-btn active" data-gallery-tab="artist">ARTIST</div>
+        <div class="gallery-tab-btn" data-gallery-tab="styles">STYLE</div>
+    </div>
+    <!-- Gallery Artist Menu Items (reuse if needed) -->
+    <div class="gallery-artist-menu-items" style="display: none;"></div>
+    <!-- Gallery Styles Menu Items -->
+    <div class="styles-menu-items" style="display: none;"></div>
+
+    <!-- Book Now Button in Vertical Menu -->
+    <div class="book-now-container">
+        <button class="book-now-btn" id="bookNowBtn">BOOK NOW</button>
+    </div>
+</aside>
+<!-- Mobile overlay menu cho từng trang, layout giống menu header mobile, ẩn mặc định -->
+<div id="mobileVerticalMenuArtists" class="mobile-vertical-overlay" style="display:none">
+  <div class="mobile-nav-header">
+    <span>ARTISTS</span>
+    <button class="mobile-menu-close" data-menu="artists">&times;</button>
+  </div>
+  <a href="#" class="mobile-nav-item" data-section="banh"><span class="menu-number">01</span> <span class="menu-text">BANH</span></a>
+  <a href="#" class="mobile-nav-item" data-section="nam-n2n"><span class="menu-number">02</span> <span class="menu-text">NAM - N2N</span></a>
+  <a href="#" class="mobile-nav-item" data-section="trinh-reklezz"><span class="menu-number">03</span> <span class="menu-text">TRINH- REKLEZZ</span></a>
+</div>
+<div id="mobileVerticalMenuGallery" class="mobile-vertical-overlay" style="display:none">
+  <div class="mobile-nav-header">
+    <span>GALLERY</span>
+    <button class="mobile-menu-close" data-menu="gallery">&times;</button>
+  </div>
+  <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="artist"><span class="menu-number">01</span> <span class="menu-text">ARTIST</span></div>
+  <div class="mobile-dropdown-menu" data-dropdown-menu="artist">
+    <a href="#" class="mobile-dropdown-item" data-section="banh">BANH</a>
+    <a href="#" class="mobile-dropdown-item" data-section="nam-n2n">NAM-N2N</a>
+    <a href="#" class="mobile-dropdown-item" data-section="trinh-reklezz">TRINH- REKLEZZ</a>
+  </div>
+  <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="style"><span class="menu-number">02</span> <span class="menu-text">STYLE</span></div>
+  <div class="mobile-dropdown-menu" data-dropdown-menu="style">
+    <a href="#" class="mobile-dropdown-item">01 OLD SCHOOL - TRADITIONAL</a>
+    <a href="#" class="mobile-dropdown-item">02 NEO TRADITIONAL</a>
+    <a href="#" class="mobile-dropdown-item">03 REALISTIC</a>
+    <a href="#" class="mobile-dropdown-item">04 FINE LINE</a>
+    <a href="#" class="mobile-dropdown-item">05 BIG WORK</a>
+    <a href="#" class="mobile-dropdown-item">06 SMALL WORK</a>
+    <a href="#" class="mobile-dropdown-item">07 BLACKWORK</a>
+    <a href="#" class="mobile-dropdown-item">08 ASIA TATTOO</a>
+  </div>
+</div>
+<div id="mobileVerticalMenuContact" class="mobile-vertical-overlay" style="display:none">
+  <div class="mobile-nav-header">
+    <span>CONTACT</span>
+    <button class="mobile-menu-close" data-menu="contact">&times;</button>
+  </div>
+  <a href="#" class="mobile-nav-item" data-section="contact-form"><span class="menu-number">01</span> <span class="menu-text">CONTACT US</span></a>
+  <a href="#" class="mobile-nav-item" data-section="google-map"><span class="menu-number">02</span> <span class="menu-text">GOOGLE MAP</span></a>
+</div>

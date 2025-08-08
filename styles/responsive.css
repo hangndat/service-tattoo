@@ -1,0 +1,660 @@
+/* ===== MOBILE-FIRST RESPONSIVE DESIGN ===== */
+/* Base styles are for mobile, then scale up */
+
+/* ===== MOBILE BASE (320px+) ===== */
+/* Default mobile styles - no media query needed */
+
+/* Mobile navigation */
+.nav-menu {
+    display: none; /* Hidden on mobile by default */
+}
+
+.mobile-menu-toggle {
+    display: block; /* Visible on mobile by default */
+}
+
+.vertical-menu {
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1001; /* Above content but below overlays */
+    position: fixed;
+    width: 280px;
+    right: 0;
+    top: 80px;
+    height: calc(100vh - 80px);
+}
+
+.vertical-menu.active {
+    transform: translateX(0);
+}
+
+/* Mobile content - full width */
+#content-container {
+    margin-right: 0; /* No space for right menu on mobile */
+}
+
+.content-wrapper {
+    padding: 0 10px; /* Minimal mobile padding */
+}
+
+/* Mobile hero adjustments */
+.hero-section {
+    height: auto;
+    min-height: calc(100vh - 80px);
+    border-left: none; /* Remove border on mobile */
+}
+
+.hero-image {
+    min-height: 250px; /* Smaller on mobile */
+}
+
+.hero-actions {
+    justify-content: flex-start; /* Left align on mobile */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+/* Mobile sections padding */
+.artists-section,
+.gallery-section,
+.flash-deals-section,
+.contact-section {
+    padding: 15px 10px;
+}
+
+/* Mobile grids - single column */
+.artists-grid,
+.photo-grid,
+.deals-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 15px;
+}
+
+/* Mobile gallery filter */
+.gallery-filter {
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    min-width: 60px;
+}
+
+/* Mobile countdown */
+.countdown {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.time-unit {
+    min-width: 50px;
+    padding: 8px;
+}
+
+/* Mobile contact form */
+.contact-content {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 25px;
+}
+
+/* Hide datetime on mobile */
+.datetime {
+    display: none;
+}
+
+/* ===== SMALL MOBILE (480px+) ===== */
+@media (min-width: 480px) {
+    .content-wrapper {
+        padding: 0 15px;
+    }
+    
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        padding: 20px 15px;
+    }
+    
+    .hero-image {
+        min-height: 280px;
+    }
+    
+    /* Two columns for smaller grids */
+    .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .countdown {
+        gap: 12px;
+    }
+    
+    .time-unit {
+        min-width: 55px;
+        padding: 10px;
+    }
+
+}
+
+/* ===== LARGE MOBILE/SMALL TABLET (576px+) ===== */
+@media (min-width: 576px) {
+    /* Better grid layouts but still mobile menu */
+    .artists-grid,
+    .deals-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+    }
+    
+    .gallery-filter {
+        gap: 10px;
+    }
+    
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+    
+    .countdown {
+        gap: 15px;
+    }
+    
+    .time-unit {
+        min-width: 60px;
+        padding: 12px;
+    }
+    
+    .content-wrapper {
+        padding: 0 20px;
+    }
+    
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        padding: 25px 20px;
+    }
+    
+    .hero-image {
+        min-height: 320px;
+    }
+}
+
+/* ===== TABLET (768px+) ===== */
+@media (min-width: 768px) {
+    .content-wrapper {
+        padding: 0 25px;
+    }
+    
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        padding: 30px 25px;
+    }
+    
+    .hero-image {
+        min-height: 400px;
+    }
+    
+    .hero-actions {
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+    
+    /* Better tablet grids */
+    .artists-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    
+    .deals-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+    
+    .gallery-filter {
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .filter-btn {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+    
+    .countdown {
+        gap: 20px;
+    }
+    
+    .time-unit {
+        min-width: 70px;
+        padding: 15px;
+    }
+    
+    /* Two column contact */
+    .contact-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+}
+
+/* ===== DESKTOP BREAKPOINT - 600px+ (NEW) ===== */
+/* Đây là breakpoint chính cho desktop layout - tối ưu cho zoom trên màn hình phổ biến */
+@media (min-width: 600px) {
+    /* === DESKTOP MENU STARTS HERE === */
+    /* RIGHT MENU APPEARS AND TAKES SPACE */
+    .nav-menu {
+        display: flex; /* Show desktop navigation */
+    }
+    
+    .mobile-menu-toggle {
+        display: none; /* Hide mobile menu toggle */
+    }
+    
+    .vertical-menu {
+        position: fixed; /* Right menu is now visible */
+        transform: translateX(0); /* Always visible */
+        width: 300px;
+        z-index: 100; /* Lower than mobile overlay */
+    }
+    
+    /* Content gets margin for right menu */
+    #content-container {
+        margin-right: 300px; /* NOW we add space for right menu */
+    }
+    
+    .content-wrapper {
+        max-width: 1100px; /* Adjust for right menu space */
+        padding: 0 30px; /* Desktop padding */
+    }
+    
+    .hero-section {
+        border-left: 0.5px solid white; /* Restore border */
+    }
+    
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        padding: 35px 30px;
+    }
+    
+    .hero-image {
+        min-height: 400px;
+    }
+    
+    .datetime {
+        display: block; /* Show datetime on desktop */
+    }
+    
+    /* Desktop grids */
+    .artists-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+    
+    .countdown {
+        gap: 25px;
+    }
+    
+    .time-unit {
+        min-width: 80px;
+        padding: 18px;
+    }
+    
+    .contact-content {
+        gap: 50px;
+    }
+}
+
+/* ===== SMALL DESKTOP (992px+) ===== */
+@media (min-width: 992px) {
+    .vertical-menu {
+        width: 250px; /* Optimize menu width */
+    }
+    
+    #content-container {
+        margin-right: 250px; /* Adjust for smaller menu */
+    }
+    
+    .content-wrapper {
+        padding: 0 35px;
+        max-width: 1200px;
+    }
+    
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        padding: 40px 35px;
+    }
+    
+    .contact-content {
+        gap: 60px;
+    }
+}
+
+/* ===== MEDIUM DESKTOP (1024px+) ===== */
+@media (min-width: 1024px) {
+    .content-wrapper {
+        padding: 0 40px;
+        max-width: 1300px;
+    }
+    
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        padding: 18px;
+    }
+}
+
+/* ===== LARGE DESKTOP (1400px+) ===== */
+@media (min-width: 1400px) {
+    .content-wrapper {
+        max-width: 1400px;
+        padding: 0 50px;
+    }
+}
+
+/* ===== ULTRA WIDE (1600px+) ===== */
+@media (min-width: 1600px) {
+    .content-wrapper {
+        max-width: 1620px; /* 1920px - 300px right menu */
+        padding: 0 60px;
+    }
+}
+
+/* ===== SUPER ULTRA WIDE (1920px+) ===== */
+@media (min-width: 1920px) {
+    .content-wrapper {
+        max-width: 1800px;
+        padding: 0 80px;
+    }
+}
+
+/* ===== LANDSCAPE ORIENTATION FIXES ===== */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero-section {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .hero-image {
+        min-height: 200px; /* Shorter on landscape */
+    }
+}
+
+/* ===== HIGH DPI DISPLAYS ===== */
+@media (min-resolution: 2dppx) {
+    .hero-title,
+    .section-title {
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    }
+    
+    .artist-image,
+    .gallery-image,
+    .deal-image {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    /* Thay thế transition: all */
+    .vertical-menu,
+    .gallery-link,
+    .gallery-arrow,
+    .artist-card,
+    .gallery-item,
+    .gallery-image,
+    .gallery-overlay,
+    .deal-card,
+    .deal-image,
+    .book-consultation-btn,
+    .load-more-btn,
+    .claim-deal-btn,
+    .submit-btn,
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
+    .map-placeholder {
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    }
+    
+    .book-consultation-btn::before {
+        display: none;
+    }
+    
+    /* Giảm box-shadow cho hover */
+    .artist-card:hover,
+    .gallery-item:hover,
+    .deal-card:hover,
+    .book-consultation-btn:hover,
+    .load-more-btn:hover,
+    .claim-deal-btn:hover,
+    .submit-btn:hover {
+        box-shadow: 0 4px 12px rgba(255, 51, 51, 0.12);
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    #content-container {
+        border: 2px solid #fff;
+    }
+    
+    .hero-section,
+    .artists-section,
+    .gallery-section,
+    .flash-deals-section,
+    .contact-section {
+        border: 1px solid #fff;
+        background-color: #000;
+    }
+    
+    .hero-title,
+    .section-title {
+        color: #fff;
+        text-shadow: none;
+        background: none;
+        -webkit-text-fill-color: #fff;
+    }
+    
+    .gallery-item,
+    .artist-card,
+    .deal-card,
+    .info-card,
+    .map-placeholder {
+        border: 2px solid #fff;
+    }
+    
+    .book-consultation-btn,
+    .load-more-btn,
+    .claim-deal-btn,
+    .submit-btn,
+    .filter-btn.active {
+        background: #fff;
+        color: #000;
+        border: 2px solid #000;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border: 3px solid #fff;
+        box-shadow: none;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    #content-container {
+        margin: 0;
+        width: 100%;
+    }
+    
+    .content-wrapper {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .hero-section {
+        height: auto;
+        min-height: 300px;
+        border: 1px solid #000;
+        page-break-inside: avoid;
+    }
+    
+    .hero-image {
+        min-height: 200px;
+        background: #f0f0f0 !important;
+    }
+    
+    .gallery-overlay,
+    .timer-container,
+    .vertical-menu,
+    .mobile-menu-toggle {
+        display: none;
+    }
+    
+    .artists-grid,
+    .photo-grid,
+    .deals-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        page-break-inside: avoid;
+    }
+    
+    .artist-card,
+    .gallery-item,
+    .deal-card {
+        page-break-inside: avoid;
+        border: 1px solid #000;
+    }
+    
+    .section-title,
+    .hero-title {
+        color: #000;
+        page-break-after: avoid;
+    }
+    
+    .book-consultation-btn,
+    .load-more-btn,
+    .claim-deal-btn,
+    .submit-btn {
+        background: #fff;
+        color: #000;
+        border: 1px solid #000;
+    }
+}
+
+/* ===== FORCED COLORS MODE (Windows High Contrast) ===== */
+@media (forced-colors: active) {
+    .hero-title,
+    .section-title {
+        forced-color-adjust: none;
+        color: CanvasText;
+    }
+    
+    .book-consultation-btn,
+    .load-more-btn,
+    .claim-deal-btn,
+    .submit-btn {
+        forced-color-adjust: none;
+        background: ButtonFace;
+        color: ButtonText;
+        border: 1px solid ButtonText;
+    }
+    
+    .gallery-item,
+    .artist-card,
+    .deal-card {
+        border: 1px solid CanvasText;
+    }
+}/* Responsive for artist and contact pages (moved from artists-content.css & contact-content.css) */
+
+@media (max-width: 1023px) {
+    .artist-content {
+        padding: 25px;
+    }
+    .contact-info {
+        padding: 30px;
+    }
+    .contact-block {
+        padding: 25px;
+    }
+    .contact-heading {
+        font-size: 1.75rem;
+    }
+    .contact-text {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero-section {
+        height: auto;
+        min-height: calc(100vh - 80px);
+        border-left: none;
+    }
+    .hero-image {
+        min-height: 250px;
+    }
+    .hero-actions {
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .contact-info {
+        padding: 20px;
+        min-height: 250px;
+    }
+    .contact-block {
+        padding: 20px;
+    }
+    .contact-heading {
+        font-size: 1.5rem;
+    }
+    .contact-text {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (min-width: 600px) {
+    .hero-section {
+        border-left: 0.5px solid white;
+    }
+}
+

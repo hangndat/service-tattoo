@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artists</title>
+    <link rel="stylesheet" href="../styles/artists-content.css">
+</head>
+<body data-page="artists">
+<section class="hero-section hero-artists">
+  <div class="hero-image" id="heroImage">
+    <!-- Images will be added by JavaScript -->
+    <div class="banner-nav" role="navigation" aria-label="Image navigation">
+      <div class="banner-dot active" role="button" aria-label="First image" tabindex="0"></div>
+      <div class="banner-dot" role="button" aria-label="Second image" tabindex="0"></div>
+      <div class="banner-dot" role="button" aria-label="Third image" tabindex="0"></div>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; width: 100%;">
+      <div>
+        <h1 class="hero-title" aria-live="polite"></h1>
+        <p class="hero-description" aria-live="polite"></p>
+      </div>
+      <a href="#" class="hero-instagram-btn" target="_blank">/INSTAGRAM</a>
+    </div>
+    <div class="hero-actions">
+      <a href="gallery.html" class="gallery-link" aria-label="View tattoo gallery">
+        <img src="./images/button-gallery.png" alt="Tattoo Gallery" style="height:48px; width:auto; display:inline-block; vertical-align:middle;" width="48" height="48" />
+      </a>
+    </div>
+  </div>
+  <script src="../js/artists-banner.js" defer></script>
+  <script src="../js/vertical-menu.js" defer></script>
+</section></body>
+</html>

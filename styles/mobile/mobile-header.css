@@ -1,0 +1,58 @@
+@media (max-width: 768px) {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1000;
+    background: #000; /* hoặc màu header của bạn */
+  }
+  
+  .main-content {
+    padding-top: 80px; /* hoặc đúng chiều cao header của bạn */
+  }
+  /* Hide the desktop navigation and date/time on mobile */
+  .header .nav-menu,
+  .header .datetime {
+    display: none;
+  }
+
+  /* Show the mobile menu toggle button and push it to the right */
+  .header .mobile-menu-toggle {
+    display: block;
+    margin-left: auto; /* Pushes the button to the far right */
+    align-self: center; /* Vertically aligns the button in the header */
+  }
+}
+
+/* Styles for the mobile navigation panel */
+.mobile-nav {
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  position: absolute;
+  top: 80px; /* Position it below the header */
+  left: 0;
+  right: 0;
+  background-color: #111; /* Dark background */
+  border-top: 1px solid #333;
+}
+
+.mobile-nav a {
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+  text-align: center;
+  /* font-family inherited from main.css */
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.mobile-nav a:hover {
+  background-color: #FF2020;
+}
+
+/* Class to show the menu when the button is clicked */
+.mobile-nav.open {
+  display: flex;
+} 

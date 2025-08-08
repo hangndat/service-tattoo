@@ -1,0 +1,978 @@
+/* === COMMON IMAGE & ANIMATION STYLES === */
+.hero-image img,
+.banner-img,
+.gallery-grid-item img,
+.gallery-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.3s;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+}
+
+@keyframes slideInLeft {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.slide-in-left { opacity: 0; transform: translateX(-40px); transition: none; }
+.slide-in-left.is-animated { animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+/* ===== CONTENT MAIN CONTAINER - FIXED LOGIC ===== */
+#content-container {
+    /* Base layout - desktop first */
+    margin-top: 80px;
+    margin-left: 0;
+    margin-right: 300px; /* Space cho right menu - CHỈ margin, KHÔNG padding */
+    height: calc(100vh - 80px); /* Thay đổi từ min-height thành height */
+    width: auto; /* Tự động tính toán */
+    position: relative;
+    overflow: hidden; /* Thay đổi từ overflow-x thành overflow */
+    transition: margin-right 0.3s ease; /* Smooth transition khi collapse menu */
+}
+
+/* Container wrapper để control max-width */
+.content-wrapper {
+    max-width: 1620px; /* 1920px - 300px = 1620px available space */
+    margin: 0 auto;
+    padding: 0 20px; /* Breathing room */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===== HERO SECTION ===== */
+.hero-section {
+    height: 100%; /* Thay đổi để fit hoàn toàn trong container */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-left: 0.5px solid white;
+    position: relative;
+    background-color: #000;
+    overflow: hidden; /* Đảm bảo không scroll */
+}
+
+.hero-section .hero-image {
+    flex: 3; /* Tăng từ flex: 1 thành flex: 3 để chiếm nhiều không gian hơn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    border-bottom: 0.5px solid white;
+    min-height: 400px; /* Tăng min-height */
+    padding: 8px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Banner image chỉ cho trang chủ */
+.banner-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+    z-index: 1;
+    display: block !important;
+    position: relative;
+    margin: auto;
+    padding: 0;
+    will-change: auto;
+}
+.banner-img.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+/* Khôi phục lại cho artists-content và các trang khác */
+.hero-image img {
+    width: auto;
+    height: auto;
+    max-width: 90%;
+    max-height: 90%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, opacity 0.5s ease;
+    display: none;
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+}
+.hero-image img.active {
+    opacity: 1;
+    z-index: 2;
+}
+.hero-image img:first-child {
+    display: block;
+}
+
+.hero-image img:hover {
+  /* transform: scale(1.02); */
+  transform: none;
+}
+
+.hero-section .hero-content {
+    background-color: #000;
+    padding: 1px 20px 0px 20px;
+    min-height: 120px;
+    border-bottom: 0.5px solid white;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+body[data-page="home"] .hero-section .hero-content {
+    flex: unset !important;
+}
+
+.hero-section .hero-title {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 500;
+    color: #ccc;
+    letter-spacing: clamp(0.5px, 0.2vw, 2px);
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.hero-section .hero-description {
+    font-size: clamp(0.75rem, 1.2vw, 0.8125rem);
+    line-height: 1.5;
+    color: #ccc;
+    margin-bottom: 0;
+    max-width: min(650px, 100%);
+    font-weight: 300;
+}
+
+
+.hero-section .hero-instagram-btn {
+    color: #ccc;
+    text-decoration: underline;
+    font-size: clamp(0.8rem, 1.1vw, 0.9375rem);
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    margin-left: 20px;
+}
+
+.hero-section .hero-instagram-btn:hover {
+    color: #ff3333;
+}
+
+.hero-section .hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: auto;
+}
+
+.hero-section .gallery-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: clamp(0.8rem, 1.1vw, 0.9375rem);
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.hero-section .gallery-link:hover {
+    color: #ff3333;
+    transform: translateX(-5px);
+}
+
+.hero-section .gallery-arrow {
+    margin-left: 15px;
+    font-size: clamp(1.5rem, 2.5vw, 1.75rem);
+    color: #ff3333;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.hero-section .gallery-link:hover .gallery-arrow {
+    transform: translateX(5px);
+}
+
+/* ===== HERO SECTION MODIFIERS ===== */
+.hero-section.hero-contact .hero-info {
+    /* Style riêng cho info contact */
+    padding: 35px 40px 0 40px;
+    background: none;
+    border-bottom: none;
+    min-height: 200px; /* Đảm bảo đủ không gian cho contact info */
+    overflow: visible;
+    flex: 3; /* Match hero-image flex ratio */
+}
+
+.hero-section.hero-contact .contact-block {
+    margin-bottom: 20px;
+}
+
+.hero-section.hero-contact .contact-heading {
+    
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.hero-section.hero-contact .contact-text {
+    color: #ccc;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.hero-section.hero-gallery .gallery-banner {
+    width: 100%;
+    min-height: 300px;
+    background: #111;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section.hero-gallery .gallery-banner-inner {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-section.hero-gallery .gallery-banner-nav {
+    margin-top: 10px;
+}
+
+.hero-section.hero-gallery .gallery-thumbnail-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.hero-section.hero-artists .banner-nav {
+    position: absolute;
+    bottom: 210px;
+    left: 98%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+}
+
+.hero-section.hero-artists .banner-dot {
+    /* width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.3s; */
+
+    width: 2px;
+    height: 30px;
+    border-radius: 30px 30px 30px 30px;
+    background: #fff;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.hero-section.hero-artists .banner-dot.active {
+    opacity: 1;
+    background: #ff3333;
+}
+
+/* Responsive tweaks nếu cần */
+@media (max-width: 900px) {
+  .hero-section .hero-content, .hero-section.hero-contact .hero-info {
+    padding: 20px 10px;
+  }
+}
+
+/* ===== COMMON SECTION STYLES ===== */
+.section-title {
+    font-size: clamp(1.5rem, 4vw, 2.625rem);
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    letter-spacing: clamp(1px, 0.3vw, 3px);
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.section-description {
+    font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 40px;
+    max-width: min(650px, 100%);
+    font-weight: 300;
+}
+
+/* ===== ARTISTS SECTION ===== */
+.artists-section {
+    padding: clamp(20px, 3vw, 40px);
+    background-color: #000;
+    position: relative;
+}
+
+.artists-header {
+    margin-bottom: clamp(30px, 5vw, 60px);
+}
+
+.artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: clamp(15px, 2.5vw, 30px);
+    margin-bottom: 40px;
+}
+
+.artist-card {
+    background-color: #111;
+    border: 1px solid #333;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 0; /* Clean edges */
+}
+
+.artist-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff3333;
+    box-shadow: 0 10px 30px rgba(255, 51, 51, 0.2);
+}
+
+.artist-image {
+    height: clamp(180px, 20vw, 250px);
+    background-color: #222;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+    /* Maintain aspect ratio */
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+
+.artist-card:hover .artist-image {
+    transform: scale(1.05);
+}
+
+.artist-info {
+    padding: 20px;
+}
+
+.artist-name {
+    color: #ff3333;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    font-weight: bold;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.artist-specialty {
+    color: white;
+    font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.artist-experience {
+    color: #ccc;
+    font-size: clamp(0.7rem, 1vw, 0.75rem);
+    font-weight: 300;
+}
+
+.artists-actions {
+    text-align: center;
+    margin-top: clamp(20px, 3vw, 40px);
+}
+
+.book-consultation-btn {
+    background-color: #ff3333;
+    color: white;
+    padding: clamp(12px 25px, 2vw, 15px 30px);
+    border: none;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+    min-height: 44px; /* Touch friendly */
+}
+
+.book-consultation-btn:hover {
+    background-color: #e62929;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
+}
+
+.book-consultation-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.book-consultation-btn:hover::before {
+    left: 100%;
+}
+
+/* ===== GALLERY SECTION ===== */
+.gallery-section {
+    padding: clamp(20px, 3vw, 40px);
+    background-color: #000;
+    position: relative;
+}
+
+.gallery-header {
+    margin-bottom: clamp(20px, 3vw, 40px);
+}
+
+.gallery-filter {
+    display: flex;
+    justify-content: center;
+    gap: clamp(8px, 1.5vw, 15px);
+    margin-bottom: clamp(20px, 3vw, 40px);
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: transparent;
+    border: 1px solid #333;
+    color: white;
+    padding: clamp(6px 15px, 1.5vw, 8px 20px);
+    cursor: pointer;
+    font-size: clamp(0.7rem, 1vw, 0.8125rem);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    min-height: 36px; /* Touch friendly */
+    border-radius: 0;
+}
+
+.filter-btn.active, 
+.filter-btn:hover {
+    background-color: #ff3333;
+    border-color: #ff3333;
+    transform: translateY(-2px);
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: clamp(10px, 2vw, 20px);
+    margin-bottom: clamp(20px, 3vw, 40px);
+}
+
+.gallery-item {
+    position: relative;
+    aspect-ratio: 1; /* Perfect squares */
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #222;
+    transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 51, 51, 0.2);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+    /* Maintain aspect ratio */
+    object-fit: cover;
+}
+
+.gallery-item:hover .gallery-image {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    color: white;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-overlay h4 {
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.gallery-overlay p {
+    font-size: clamp(0.7rem, 1vw, 0.75rem);
+    color: #ff3333;
+    font-weight: 500;
+}
+
+.gallery-actions {
+    text-align: center;
+}
+
+.load-more-btn {
+    background-color: #ff3333;
+    color: white;
+    padding: clamp(12px 25px, 2vw, 15px 30px);
+    border: none;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 44px;
+    border-radius: 0;
+}
+
+.load-more-btn:hover {
+    background-color: #e62929;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
+}
+
+/* ===== FLASH DEALS SECTION ===== */
+.flash-deals-section {
+    padding: clamp(20px, 3vw, 40px);
+    background-color: #000;
+    position: relative;
+}
+
+.deals-header {
+    margin-bottom: clamp(20px, 3vw, 40px);
+}
+
+.deals-timer {
+    text-align: center;
+    margin-bottom: clamp(30px, 5vw, 60px);
+}
+
+.timer-container h3 {
+    color: #ff3333;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: clamp(15px, 3vw, 30px);
+    flex-wrap: wrap;
+}
+
+.time-unit {
+    text-align: center;
+    background-color: #111;
+    padding: clamp(12px, 2vw, 20px);
+    border: 1px solid #333;
+    min-width: clamp(60px, 8vw, 80px);
+    flex-shrink: 0;
+}
+
+.time-number {
+    display: block;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: bold;
+    color: white;
+    line-height: 1;
+}
+
+.time-label {
+    display: block;
+    font-size: clamp(0.6rem, 1vw, 0.6875rem);
+    color: #ccc;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    gap: clamp(15px, 2.5vw, 30px);
+    margin-bottom: clamp(30px, 5vw, 60px);
+}
+
+.deal-card {
+    background-color: #111;
+    border: 1px solid #333;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 0;
+}
+
+.deal-card:hover {
+    transform: translateY(-5px);
+    border-color: #ff3333;
+    box-shadow: 0 15px 40px rgba(255, 51, 51, 0.2);
+}
+
+.deal-card.sold-out {
+    opacity: 0.6;
+    filter: grayscale(100%);
+}
+
+.deal-image {
+    height: clamp(150px, 18vw, 200px);
+    background-color: #222;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+}
+
+.deal-card:hover .deal-image {
+    transform: scale(1.05);
+}
+
+.deal-info {
+    padding: 20px;
+}
+
+.deal-title {
+    color: white;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    font-weight: bold;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.deal-description {
+    color: #ccc;
+    font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.deal-pricing {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.original-price {
+    color: #666;
+    text-decoration: line-through;
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+}
+
+.deal-price {
+    color: #ff3333;
+    font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+    font-weight: bold;
+}
+
+.discount {
+    background-color: #ff3333;
+    color: white;
+    padding: 2px 8px;
+    font-size: clamp(0.6rem, 1vw, 0.6875rem);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.claim-deal-btn {
+    background-color: #ff3333;
+    color: white;
+    padding: clamp(10px 15px, 1.5vw, 12px 20px);
+    border: none;
+    font-size: clamp(0.8rem, 1.1vw, 0.875rem);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    transition: all 0.3s ease;
+    min-height: 40px;
+    border-radius: 0;
+}
+
+.claim-deal-btn:hover {
+    background-color: #e62929;
+    transform: translateY(-2px);
+}
+
+.claim-deal-btn:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.deals-info {
+    max-width: min(600px, 100%);
+    margin: 0 auto;
+}
+
+.info-card {
+    background-color: #111;
+    padding: clamp(20px, 3vw, 30px);
+    border: 1px solid #333;
+    position: relative;
+}
+
+.info-card h3 {
+    color: #ff3333;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: clamp(1rem, 1.3vw, 1.125rem);
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-card li {
+    color: #ccc;
+    margin-bottom: 8px;
+    padding-left: 15px;
+    position: relative;
+    font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+    line-height: 1.5;
+}
+
+.info-card li:before {
+    content: "•";
+    color: #ff3333;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+    padding: clamp(20px, 3vw, 40px);
+    background-color: #000;
+    position: relative;
+}
+
+.contact-header {
+    margin-bottom: clamp(30px, 5vw, 60px);
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(30px, 5vw, 60px);
+    margin-bottom: clamp(30px, 5vw, 60px);
+}
+
+.contact-form-section h2 {
+    color: white;
+    margin-bottom: 30px;
+    font-size: clamp(1.25rem, 2vw, 1.375rem);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: clamp(10px 12px, 1.5vw, 12px 15px);
+    background-color: #111;
+    border: 1px solid #333;
+    color: white;
+    font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    border-radius: 0;
+    min-height: 44px; /* Touch friendly */
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #666;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ff3333;
+    box-shadow: 0 0 10px rgba(255, 51, 51, 0.2);
+}
+
+.submit-btn {
+    background-color: #ff3333;
+    color: white;
+    padding: clamp(12px 25px, 2vw, 15px 30px);
+    border: none;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    min-height: 44px;
+    border-radius: 0;
+}
+
+.submit-btn:hover {
+    background-color: #e62929;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 51, 51, 0.3);
+}
+
+.info-block {
+    margin-bottom: 30px;
+}
+
+.info-block h3 {
+    color: #ff3333;
+    margin-bottom: 10px;
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.info-block p {
+    color: #ccc;
+    line-height: 1.6;
+    font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+}
+
+.map-section {
+    text-align: center;
+}
+
+.map-placeholder {
+    height: clamp(200px, 25vw, 300px);
+    background-color: #111;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.map-placeholder:hover {
+    border-color: #ff3333;
+}
+
+.map-placeholder p {
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/* Gộp style chung cho các button, card, title, description */
+.book-consultation-btn, .load-more-btn, .claim-deal-btn, .submit-btn {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    font-size: clamp(0.875rem, 1.2vw, 1rem);
+    font-weight: 400;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-height: 44px;
+    border-radius: 0;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.book-consultation-btn:hover, .load-more-btn:hover, .claim-deal-btn:hover, .submit-btn:hover {
+    background-color: #e62929;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(255, 51, 51, 0.10);
+}
+
+.hero-title {
+    font-weight: 700 !important;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem) !important;
+    color: white;
+    letter-spacing: clamp(1px, 0.3vw, 3px);
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.artist-card, .gallery-item, .deal-card {
+    background-color: #111;
+    border: 1px solid #333;
+    overflow: hidden;
+    border-radius: 0;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.artist-card:hover, .gallery-item:hover, .deal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 2px 8px rgba(255, 51, 51, 0.10);
+    border-color: #ff3333;
+}
