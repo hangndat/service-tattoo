@@ -58,5 +58,15 @@ document.addEventListener('componentsLoaded', () => {
   });
 
   // Initialize with contact tab
-  renderContactTab('contact');
+  try {
+    const savedTab = localStorage.getItem('contactTab');
+    renderContactTab(savedTab || 'contact');
+  } catch (e) {
+    try {
+    const savedTab = localStorage.getItem('contactTab');
+    renderContactTab(savedTab || 'contact');
+  } catch (e) {
+    renderContactTab('contact');
+  }
+  }
 }); 

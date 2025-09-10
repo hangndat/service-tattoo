@@ -163,10 +163,10 @@ function createModal() {
     modal.className = 'gallery-modal';
     modal.innerHTML = `
         <div class="gallery-modal-content">
-            <button class="gallery-modal-arrow gallery-modal-arrow-left" aria-label="Previous image">&#60;</button>
-            <img class="gallery-modal-image" src="" alt="Gallery Image" width="1200" height="800">
-            <button class="gallery-modal-arrow gallery-modal-arrow-right" aria-label="Next image">&#62;</button>
-            <button class="gallery-modal-close">&times;</button>
+            <button class="gallery-modal-close" aria-label="Close">×</button>
+            <button class="gallery-modal-arrow gallery-modal-arrow-left" aria-label="Prev">‹</button>
+            <img class="gallery-modal-image" alt="Preview"/>
+            <button class="gallery-modal-arrow gallery-modal-arrow-right" aria-label="Next">›</button>
         </div>
     `;
     
@@ -426,23 +426,44 @@ function animateSlideInLeft(selector = '.slide-in-left', stagger = 80) {
 
 // Initialize gallery
 function galleryInit() {
-    // Mặc định tab: artist
-    renderGalleryArtistMenu();
-    renderGalleryGrid(currentArtist); // default: banh
+     const isMobile = window.innerWidth <= 768;
 
-    // Cũng setup menu style, nhưng KHÔNG render ảnh style ở đây
-    renderGalleryStylesMenu();
+  if (isMobile) {
+    try {
+      const savedArtist = localStorage.getItem('currentArtist');
+      if (savedArtist) currentArtist = savedArtist;
 
-    setupGalleryTabSwitching();
+      const savedStyle = localStorage.getItem('currentStyleIndex');
+      if (savedStyle !== null) currentStyleIndex = parseInt(savedStyle, 10);
+    } catch (e) { /* ignore */ }
+  } else {
+    currentArtist = 'banh';
+    currentStyleIndex = 0;
+  }
 
-    // Show artist tab mặc định
-    const artistMenu = document.querySelector('.gallery-artist-menu-items');
-    const styleMenu = document.querySelector('.styles-menu-items');
-    if (artistMenu) artistMenu.style.display = 'block';
-    if (styleMenu) styleMenu.style.display = 'none';
+  // luôn render cả 2 menu (ẩn/hiện bằng tab)
+  renderGalleryArtistMenu();
+  renderGalleryStylesMenu();
+  setupGalleryTabSwitching();
 
-    // Animate hero content
-    animateSlideInLeft('.hero-content .slide-in-left', 120);
+  const artistMenu = document.querySelector('.gallery-artist-menu-items');
+  const styleMenu = document.querySelector('.styles-menu-items');
+
+  // Ưu tiên tab đã lưu
+  const savedTab = localStorage.getItem('galleryTab'); // 'artist' | 'style'
+  const useStyle = savedTab === 'style';
+
+  if (artistMenu) artistMenu.style.display = useStyle ? 'none' : 'block';
+  if (styleMenu)  styleMenu.style.display  = useStyle ? 'block' : 'none';
+
+  if (useStyle) {
+    renderGalleryGridFromStyle(currentStyleIndex || 0);
+  } else {
+    renderGalleryGrid(currentArtist);
+  }
+
+  updateGalleryHeroContent(currentArtist);
+  animateSlideInLeft('.hero-content .slide-in-left', 120);
 }
 
 function renderGalleryGridFromStyle(styleIndex) {

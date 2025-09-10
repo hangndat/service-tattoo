@@ -1,227 +1,520 @@
-// Mobile menu script - chỉ chạy cho mobile
-// Thêm logic mở/đóng menu hamburger ở đây
+// // mobile-menu.js (UNIFIED, Flow B) — 1 menu duy nhất + dropdown các mục con
+// document.addEventListener('componentsLoaded', function () {
+//   const menuBtn = document.getElementById('mobileMenuToggle');
+//   const closeBtn = document.getElementById('mobileMenuClose');
+//   const nav = document.getElementById('mobileOnlyNav');
+//   if (!menuBtn || !closeBtn || !nav) return;
 
-// Wait for the 'componentsLoaded' event, which is dispatched by component-loader.js
-// This ensures that the header and its buttons are in the DOM before we attach listeners.
-document.addEventListener('componentsLoaded', function() {
-  const menuButton = document.getElementById('mobileMenuToggle');
-  const closeButton = document.getElementById('mobileMenuClose');
-  const mobileNav = document.getElementById('mobileOnlyNav');
+//   const isMobile = () => window.innerWidth <= 768;
+//   const currentPage = () => (document.body && document.body.dataset && document.body.dataset.page) || '';
 
-  if (menuButton && mobileNav && closeButton) {
-    // Open the menu
-    menuButton.addEventListener('click', debounce(function() {
-      mobileNav.classList.add('open');
-    }, 200));
+//   // Open/Close
+//   menuBtn.addEventListener('click', debounce(() => nav.classList.add('open'), 200));
+//   closeBtn.addEventListener('click', debounce(() => nav.classList.remove('open'), 200));
 
-    // Close the menu
-    closeButton.addEventListener('click', debounce(function() {
-      mobileNav.classList.remove('open');
-    }, 200));
-  } else {
-    // This will help us debug if the elements are still not found for some reason.
-    console.error('Mobile menu elements could not be found even after componentsLoaded event.');
+//   // Helper: wait until condition true (avoid race with per-page scripts)
+//   function waitUntil(testFn, { timeout = 10000, interval = 50 } = {}) {
+//     return new Promise((resolve, reject) => {
+//       const start = Date.now();
+//       const timer = setInterval(() => {
+//         try {
+//           if (testFn()) {
+//             clearInterval(timer);
+//             resolve();
+//           } else if (Date.now() - start > timeout) {
+//             clearInterval(timer);
+//             reject(new Error('waitUntil timeout'));
+//           }
+//         } catch (err) {
+//           clearInterval(timer);
+//           reject(err);
+//         }
+//       }, interval);
+//     });
+//   }
+
+//   // React to artists data becoming ready
+//   document.addEventListener('artistsDataReady', () => {
+//     // no-op, just lets waitUntil resolve faster
+//   });
+
+//   // Dropdown toggle (hỗ trợ lồng nhau)
+//   nav.querySelectorAll('.mobile-dropdown-toggle').forEach(toggle => {
+//     toggle.addEventListener('click', function (e) {
+//       e.stopPropagation();
+//       const key = toggle.dataset.dropdown;
+//       if (!key) return;
+//       const menu = nav.querySelector(`.mobile-dropdown-menu[data-dropdown-menu="${key}"]`);
+//       if (!menu) return;
+
+//       // Đóng tất cả menu ngang cấp (chỉ cùng parentNode)
+//       const siblings = [...toggle.parentNode.children];
+//       siblings.forEach(el => {
+//         if (el !== menu && el.classList?.contains('mobile-dropdown-menu')) el.classList.remove('open');
+//         if (el !== toggle && el.classList?.contains('mobile-dropdown-toggle')) el.classList.remove('active');
+//       });
+
+//       // Toggle menu hiện tại
+//       const willOpen = !menu.classList.contains('open');
+//       if (willOpen) { menu.classList.add('open'); toggle.classList.add('active'); }
+//       else { menu.classList.remove('open'); toggle.classList.remove('active'); }
+//     });
+//   });
+
+//   // ========== NAV HELPERS (Flow B) ==========
+//   function goTo(page) { window.location.href = page; }
+//   function setActiveInMenu(selector, predicate) {
+//     nav.querySelectorAll(selector).forEach(a => a.classList.toggle('active', predicate(a)));
+//   }
+//   function closeAll() {
+//     nav.querySelectorAll('.mobile-dropdown-menu.open').forEach(m => m.classList.remove('open'));
+//     nav.querySelectorAll('.mobile-dropdown-toggle.active').forEach(t => t.classList.remove('active'));
+//     nav.classList.remove('open');
+//   }
+
+//   // ========== ARTISTS actions ==========
+//   function handlePickArtist(artistKey) {
+//     if (!artistKey) return;
+//     if (!isMobile()) return;
+
+//     if (currentPage() !== 'artists') {
+//       // Save state then navigate
+//       try { localStorage.setItem('selectedArtist', artistKey); } catch(_){}
+//       goTo('../artist.html');
+//       return;
+//     }
+
+//     // On artists page: ensure scripts ready then render
+//     const doRender = () => {
+//       if (window.banner?.switchArtist) window.banner.switchArtist(artistKey);
+//       if (window.renderArtistInfo) window.renderArtistInfo(artistKey);
+//       setActiveInMenu('[data-dropdown-menu="artists"] .mobile-dropdown-item,[data-dropdown-menu="artist"] .mobile-dropdown-item',
+//         a => a.getAttribute('data-section') === artistKey);
+//       closeAll();
+//     };
+
+//     if (!window.renderArtistInfo || !window.artistsData || !window.artistsData[artistKey]) {
+//       waitUntil(() => window.renderArtistInfo && window.artistsData && window.artistsData[artistKey])
+//         .then(doRender)
+//         .catch(() => { console.warn('[mobile-menu] artistsData not ready in time (artists page)'); closeAll(); });
+//     } else {
+//       doRender();
+//     }
+//   }
+
+//   nav.querySelectorAll('[data-dropdown-menu="artists"] .mobile-dropdown-item,[data-dropdown-menu="artist"] .mobile-dropdown-item')
+//     .forEach(item => {
+//       item.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         handlePickArtist(item.getAttribute('data-section'));
+//       });
+//     });
+
+//   // ========== GALLERY actions ==========
+//   function handlePickStyleIndex(idx) {
+//     const i = Number(idx);
+//     if (Number.isNaN(i)) return;
+//     if (!isMobile()) return;
+
+//     // Lưu style đã chọn
+//     try { localStorage.setItem('currentStyleIndex', String(i)); } catch(_){}
+
+//     if (currentPage() !== 'gallery') {
+//       // giữ currentArtist nếu user vừa pick ở menu artist
+//       const activeArtistItem = nav.querySelector('[data-dropdown-menu="artist"] .mobile-dropdown-item.active');
+//       const artistFromMenu = activeArtistItem?.getAttribute('data-section');
+//       if (artistFromMenu) try { localStorage.setItem('currentArtist', artistFromMenu); } catch(_){}
+//       goTo('../gallery.html');
+//       return;
+//     }
+
+//     // Đang ở gallery page: render theo STYLE (luôn)
+//     window.currentStyleIndex = i;
+//     if (window.renderGalleryGridFromStyle) {
+//       window.renderGalleryGridFromStyle(i);
+//     }
+//     if (window.updateGalleryHeroContentFromStyle) {
+//       window.updateGalleryHeroContentFromStyle(i);
+//     }
+//     setActiveInMenu('[data-dropdown-menu="style"] .mobile-dropdown-item', (_a, j) => j === i);
+//     closeAll();
+//   }
+
+//   nav.querySelectorAll('[data-dropdown-menu="style"] .mobile-dropdown-item')
+//     .forEach((item, idx) => {
+//       const styleIdx = item.getAttribute('data-style-index') ?? idx;
+//       item.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         handlePickStyleIndex(styleIdx);
+//       });
+//     });
+
+//   // ========== CONTACT actions ==========
+//   function handleContact(section) {
+//     if (!section) return;
+//     if (!isMobile()) return;
+//     const typeMap = { 'contact-form': 'contact', 'google-map': 'map', 'review': 'review' };
+//     const type = typeMap[section];
+
+//     if (currentPage() !== 'contact') {
+//       try { localStorage.setItem('contactTab', type || 'contact'); } catch(_){}
+//       goTo('../contact.html');
+//       return;
+//     }
+
+//     if (type && window.renderContactTab) window.renderContactTab(type);
+//     setActiveInMenu('[data-dropdown-menu="contact"] .mobile-dropdown-item', a => a.getAttribute('data-section') === section);
+//     closeAll();
+//   }
+
+//   nav.querySelectorAll('[data-dropdown-menu="contact"] .mobile-dropdown-item')
+//     .forEach(item => {
+//       item.addEventListener('click', function (e) {
+//         e.preventDefault();
+//         handleContact(item.getAttribute('data-section'));
+//       });
+//     });
+
+//   // Click ngoài để đóng menu
+//   document.addEventListener('click', function (e) {
+//     if (!isMobile()) return;
+//     if (!nav.classList.contains('open')) return;
+//     if (!nav.contains(e.target) && e.target !== document.getElementById('mobileMenuToggle')) {
+//       closeAll();
+//     }
+//   });
+
+//   // ========== PAGE-ENTRY STATE RESTORE (mobile only) ==========
+//   if (isMobile()) {
+//     // On artists page: restore selected artist
+//     if (currentPage() === 'artists') {
+//       const params = new URLSearchParams(window.location.search);
+//       const paramArtist = params.get('artist');
+//       const saved = localStorage.getItem('selectedArtist');
+//       const artist = paramArtist || saved || 'banh';
+//       waitUntil(() => window.renderArtistInfo && window.artistsData && window.artistsData[artist])
+//         .then(() => {
+//           if (window.banner?.switchArtist) window.banner.switchArtist(artist);
+//           window.renderArtistInfo(artist);
+//           setActiveInMenu('[data-dropdown-menu="artists"] .mobile-dropdown-item,[data-dropdown-menu="artist"] .mobile-dropdown-item',
+//             a => a.getAttribute('data-section') === artist);
+//         })
+//         .catch(() => {/* ignore */});
+//     }
+
+//     // On gallery page: restore artist/style (ưu tiên style nếu đã chọn)
+//     if (currentPage() === 'gallery') {
+//       const savedArtist = localStorage.getItem('currentArtist') || 'banh';
+//       const savedStyleStr = localStorage.getItem('currentStyleIndex');
+//       const hasSavedStyle = savedStyleStr !== null && savedStyleStr !== undefined;
+//       const savedStyle = hasSavedStyle ? Number(savedStyleStr) : 0;
+
+//       window.currentArtist = savedArtist;
+//       window.currentStyleIndex = hasSavedStyle ? savedStyle : 0;
+
+//       const doRenderByStyle = () => {
+//         if (window.renderGalleryGridFromStyle) window.renderGalleryGridFromStyle(window.currentStyleIndex);
+//         if (window.updateGalleryHeroContentFromStyle) window.updateGalleryHeroContentFromStyle(window.currentStyleIndex);
+//       };
+
+//       const doRenderByArtist = () => {
+//         if (window.renderGalleryGrid) window.renderGalleryGrid(window.currentArtist);
+//         if (window.updateGalleryHeroContent) window.updateGalleryHeroContent(window.currentArtist);
+//       };
+
+//       if (typeof window.galleryInit === 'function') {
+//         setTimeout(() => {
+//           if (hasSavedStyle) {
+//             doRenderByStyle();
+//           } else {
+//             doRenderByArtist();
+//           }
+//         }, 50);
+//       } else {
+//         if (hasSavedStyle) {
+//           doRenderByStyle();
+//         } else {
+//           doRenderByArtist();
+//         }
+//       }
+//     }
+
+//     // On contact page: restore tab
+//     if (currentPage() === 'contact') {
+//       const tab = localStorage.getItem('contactTab') || 'contact';
+//       waitUntil(() => typeof window.renderContactTab === 'function')
+//         .then(() => window.renderContactTab(tab))
+//         .catch(() => {/* ignore */});
+//     }
+
+//     // Default highlight for gallery artist dropdown in menu
+//     nav.querySelectorAll('[data-dropdown-menu="artist"] .mobile-dropdown-item')
+//       .forEach(a => a.classList.toggle('active', a.getAttribute('data-section') === 'banh'));
+//   }
+// });
+
+// // Giữ nguyên debounce utility
+// function debounce(fn, delay) {
+//   let t; return (...args) => { if (t) return; fn(...args); t = setTimeout(() => t = null, delay); };
+// }
+
+
+// mobile-menu.js — Optimized + origin-aware + galleryTab restore
+document.addEventListener('componentsLoaded', function () {
+  const menuBtn = document.getElementById('mobileMenuToggle');
+  const closeBtn = document.getElementById('mobileMenuClose');
+  const nav = document.getElementById('mobileOnlyNav');
+  if (!menuBtn || !closeBtn || !nav) return;
+
+  // ---------- Utils ----------
+  const isMobile = () => window.innerWidth <= 768;
+  const currentPage = () => (document.body?.dataset?.page) || '';
+  let navigating = false;
+
+  function goTo(page) {
+    if (navigating) return;
+    navigating = true;
+    window.location.href = page;
+    // fallback nếu vì lý do gì đó không rời trang
+    setTimeout(() => { navigating = false; }, 1500);
   }
-});
 
-// --- Mobile vertical overlay menu logic ---
-// Combined with main menu logic to avoid duplicate listeners
-function initVerticalMenuOverlay() {
-  if (window.innerWidth > 768) return;
-  const page = document.body.dataset.page;
-  const allowedPages = ['artists', 'gallery', 'contact'];
-  if (!allowedPages.includes(page)) return;
+  function waitUntil(testFn, { timeout = 8000 } = {}) {
+    return new Promise((res, rej) => {
+      const start = performance.now();
+      (function loop() {
+        if (testFn()) return res();
+        if (performance.now() - start > timeout) return rej(new Error('waitUntil timeout'));
+        requestAnimationFrame(loop);
+      })();
+    });
+  }
 
-  // Xác định id menu overlay cho từng trang
-  const menuMap = {
-    artists: 'mobileVerticalMenuArtists',
-    gallery: 'mobileVerticalMenuGallery',
-    contact: 'mobileVerticalMenuContact'
+  function saveState(kv = {}) {
+    try { Object.entries(kv).forEach(([k, v]) => localStorage.setItem(k, v)); } catch (_) {}
+  }
+  function removeState(keys = []) {
+    try { keys.forEach(k => localStorage.removeItem(k)); } catch (_) {}
+  }
+
+  function setActiveInMenu(selector, predicate) {
+    nav.querySelectorAll(selector).forEach(a => a.classList.toggle('active', predicate(a)));
+  }
+  function closeAll() {
+    nav.querySelectorAll('.mobile-dropdown-menu.open').forEach(m => m.classList.remove('open'));
+    nav.querySelectorAll('.mobile-dropdown-toggle.active').forEach(t => t.classList.remove('active'));
+    nav.classList.remove('open');
+  }
+
+  // ---------- Open/Close ----------
+  menuBtn.addEventListener('click', debounce(() => nav.classList.add('open'), 200));
+  closeBtn.addEventListener('click', debounce(() => nav.classList.remove('open'), 200));
+
+  // ---------- Dropdown toggle (cache siblings để đóng nhanh) ----------
+  const SELECTORS = {
+    toggle: '.mobile-dropdown-toggle',
+    menu: (k) => `.mobile-dropdown-menu[data-dropdown-menu="${k}"]`,
   };
-  const menuId = menuMap[page];
-  const menuOverlay = document.getElementById(menuId);
 
-  // Tạo nút mũi tên nếu chưa có
-  if (!document.getElementById('mobileArrowBtn')) {
-    const arrowBtn = document.createElement('button');
-    arrowBtn.id = 'mobileArrowBtn';
-    arrowBtn.className = 'mobile-arrow-btn';
-    arrowBtn.setAttribute('aria-label', 'Open menu');
-    arrowBtn.innerHTML = '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="11" fill="#111"/><path d="M14.5 11H7.5M7.5 11L10 8.5M7.5 11L10 13.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    arrowBtn.style.position = 'fixed';
-    arrowBtn.style.right = '6px';
-    arrowBtn.style.top = '50%';
-    arrowBtn.style.transform = 'translateY(-50%)';
-    arrowBtn.style.zIndex = '10001';
-    arrowBtn.style.width = '32px';
-    arrowBtn.style.height = '32px';
-    arrowBtn.style.background = 'transparent';
-    arrowBtn.style.border = 'none';
-    arrowBtn.style.padding = '0';
-    arrowBtn.style.display = 'flex';
-    arrowBtn.style.alignItems = 'center';
-    arrowBtn.style.justifyContent = 'center';
-    arrowBtn.style.cursor = 'pointer';
-    arrowBtn.style.userSelect = 'none';
-    arrowBtn.style.touchAction = 'none';
-    document.body.appendChild(arrowBtn);
+  nav.querySelectorAll(SELECTORS.toggle).forEach(toggle => {
+    const key = toggle.dataset.dropdown;
+    const parent = toggle.parentNode;
+    const menu = key ? nav.querySelector(SELECTORS.menu(key)) : null;
 
-    // Kéo/thả mượt mà theo trục dọc (touch + mouse)
-    let isDragging = false;
-    let startY = 0;
-    let startTop = 0;
-    let animationFrame = null;
-    let lastTop = null;
-    function setBtnTop(newTop) {
-      arrowBtn.style.top = newTop + 'px';
-      lastTop = newTop;
-    }
-    function onMove(clientY) {
-      const deltaY = clientY - startY;
-      let newTop = startTop + deltaY;
-      newTop = Math.max(12, Math.min(window.innerHeight - 44, newTop));
-      if (lastTop !== newTop) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = requestAnimationFrame(() => setBtnTop(newTop));
-      }
-    }
-    arrowBtn.addEventListener('touchstart', function(e) {
-      isDragging = true;
-      startY = e.touches[0].clientY;
-      startTop = parseInt(arrowBtn.style.top) || window.innerHeight/2;
-      arrowBtn.style.transition = 'none';
-    });
-    arrowBtn.addEventListener('touchmove', function(e) {
-      if (!isDragging) return;
-      onMove(e.touches[0].clientY);
-    });
-    arrowBtn.addEventListener('touchend', function() {
-      isDragging = false;
-      arrowBtn.style.transition = '';
-    });
-    arrowBtn.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      startY = e.clientY;
-      startTop = parseInt(arrowBtn.style.top) || window.innerHeight/2;
-      arrowBtn.style.transition = 'none';
-      document.body.style.userSelect = 'none';
-    });
-    window.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      onMove(e.clientY);
-    });
-    window.addEventListener('mouseup', function() {
-      if (isDragging) {
-        isDragging = false;
-        arrowBtn.style.transition = '';
-        document.body.style.userSelect = '';
-      }
-    });
-
-    // Khi bấm vào nút, mở menu overlay đúng trang với hiệu ứng mượt
-    arrowBtn.addEventListener('click', function(e) {
+    toggle.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (!menuOverlay) return;
-      menuOverlay.style.display = 'flex';
-      // Đảm bảo hiệu ứng trượt vào giống menu ☰
-      requestAnimationFrame(() => {
-        menuOverlay.classList.add('open');
-      });
+      if (!key || !menu) return;
+
+      // đóng ngang cấp
+      for (const el of parent.children) {
+        if (el !== menu && el.classList?.contains('mobile-dropdown-menu')) el.classList.remove('open');
+        if (el !== toggle && el.classList?.contains('mobile-dropdown-toggle')) el.classList.remove('active');
+      }
+
+      const opening = !menu.classList.contains('open');
+      menu.classList.toggle('open', opening);
+      toggle.classList.toggle('active', opening);
     });
+  });
+
+  // ---------- Handlers ----------
+  // origin: 'artists' (top-level) | 'gallery-artist' (submenu in Gallery)
+  function handlePickArtist(artistKey, origin) {
+    if (!artistKey || !isMobile()) return;
+
+    const onArtistsPage = currentPage() === 'artists';
+    const onGalleryPage = currentPage() === 'gallery';
+
+    if (origin === 'gallery-artist') {
+      // ở GALLERY → ARTIST: luôn dùng logic của gallery
+      saveState({ currentArtist: artistKey, galleryTab: 'artist' });
+      removeState(['currentStyleIndex']);
+      if (!onGalleryPage) return goTo('../gallery.html');
+
+      if (window.renderGalleryGrid) window.renderGalleryGrid(artistKey);
+      if (window.updateGalleryHeroContent) window.updateGalleryHeroContent(artistKey);
+
+      setActiveInMenu(
+        '[data-dropdown-menu="artist"] .mobile-dropdown-item',
+        a => a.getAttribute('data-section') === artistKey
+      );
+      closeAll();
+      return;
+    }
+
+    // origin === 'artists' (top-level)
+    if (!onArtistsPage) {
+      saveState({ selectedArtist: artistKey });
+      return goTo('../artist.html');
+    }
+
+    const doRender = () => {
+      if (window.banner?.switchArtist) window.banner.switchArtist(artistKey);
+      if (window.renderArtistInfo) window.renderArtistInfo(artistKey);
+      setActiveInMenu(
+        '[data-dropdown-menu="artists"] .mobile-dropdown-item',
+        a => a.getAttribute('data-section') === artistKey
+      );
+      closeAll();
+    };
+
+    if (!window.renderArtistInfo || !window.artistsData || !window.artistsData[artistKey]) {
+      waitUntil(() => window.renderArtistInfo && window.artistsData && window.artistsData[artistKey])
+        .then(doRender)
+        .catch(() => { console.warn('[mobile-menu] artistsData not ready'); closeAll(); });
+    } else {
+      doRender();
+    }
   }
 
-  // Đóng menu khi bấm nút close hoặc ra ngoài, có hiệu ứng mượt
-  if (menuOverlay) {
-    // Nút close
-    menuOverlay.querySelectorAll('.mobile-menu-close').forEach(btn => {
-      btn.addEventListener('click', function() {
-        menuOverlay.classList.remove('open');
-        // Chờ hiệu ứng xong mới ẩn
-        menuOverlay.addEventListener('transitionend', function handler() {
-          if (!menuOverlay.classList.contains('open')) {
-            menuOverlay.style.display = 'none';
-            menuOverlay.removeEventListener('transitionend', handler);
-          }
-        });
-      });
-    });
-    // Bấm ra ngoài
-    document.addEventListener('click', function(e) {
-      if (window.innerWidth > 768) return;
-      if (!menuOverlay.classList.contains('open')) return;
-      if (!menuOverlay.contains(e.target) && e.target.id !== 'mobileArrowBtn') {
-        menuOverlay.classList.remove('open');
-        menuOverlay.addEventListener('transitionend', function handler() {
-          if (!menuOverlay.classList.contains('open')) {
-            menuOverlay.style.display = 'none';
-            menuOverlay.removeEventListener('transitionend', handler);
-          }
-        });
-      }
-    });
-    // Vuốt sang phải để đóng menu
-    let touchStartX = null;
-    menuOverlay.addEventListener('touchstart', function(e) {
-      touchStartX = e.touches[0].clientX;
-    });
-    menuOverlay.addEventListener('touchmove', function(e) {
-      if (touchStartX === null) return;
-      const touchCurrentX = e.touches[0].clientX;
-      if (touchCurrentX - touchStartX > 60) {
-        menuOverlay.classList.remove('open');
-        menuOverlay.addEventListener('transitionend', function handler() {
-          if (!menuOverlay.classList.contains('open')) {
-            menuOverlay.style.display = 'none';
-            menuOverlay.removeEventListener('transitionend', handler);
-          }
-        });
-        touchStartX = null;
-      }
-    });
-    menuOverlay.addEventListener('touchend', function() {
-      touchStartX = null;
-    });
+  function handlePickStyleIndex(idx) {
+    const i = Number(idx);
+    if (Number.isNaN(i) || !isMobile()) return;
+
+    saveState({ currentStyleIndex: String(i), galleryTab: 'style' });
+
+    if (currentPage() !== 'gallery') {
+      // nếu user có chọn artist trước đó ở GALLERY → ARTIST, giữ lại
+      const a = nav.querySelector('[data-dropdown-menu="artist"] .mobile-dropdown-item.active');
+      const artistFromMenu = a?.getAttribute('data-section');
+      if (artistFromMenu) saveState({ currentArtist: artistFromMenu });
+      return goTo('../gallery.html');
+    }
+
+    // đang ở gallery: render theo style
+    window.currentStyleIndex = i;
+    if (window.renderGalleryGridFromStyle) window.renderGalleryGridFromStyle(i);
+    if (window.updateGalleryHeroContentFromStyle) window.updateGalleryHeroContentFromStyle(i);
+    setActiveInMenu('[data-dropdown-menu="style"] .mobile-dropdown-item', (_a, j) => String(j) === String(i));
+    closeAll();
   }
 
-  // Ẩn nút mũi tên khi menu ☰ mở (bằng JS, dự phòng nếu CSS không đủ)
-  const mobileOnlyNav = document.getElementById('mobileOnlyNav');
-  const arrowBtn = document.getElementById('mobileArrowBtn');
-  if (mobileOnlyNav && arrowBtn) {
-    const observer = new MutationObserver(() => {
-      if (mobileOnlyNav.classList.contains('open')) {
-        arrowBtn.style.display = 'none';
+  function handleContact(section) {
+    if (!section || !isMobile()) return;
+    const typeMap = { 'contact-form': 'contact', 'google-map': 'map', 'review': 'review' };
+    const type = typeMap[section] || 'contact';
+
+    if (currentPage() !== 'contact') {
+      saveState({ contactTab: type });
+      return goTo('../contact.html');
+    }
+
+    if (window.renderContactTab) window.renderContactTab(type);
+    setActiveInMenu('[data-dropdown-menu="contact"] .mobile-dropdown-item', a => a.getAttribute('data-section') === section);
+    closeAll();
+  }
+
+  // ---------- Event Delegation cho mọi .mobile-dropdown-item ----------
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('.mobile-dropdown-item');
+    if (!a || !nav.contains(a)) return;
+    e.preventDefault();
+
+    // xác định group bằng parent menu gần nhất
+    const parentMenu = a.closest('[data-dropdown-menu]');
+    const group = parentMenu?.getAttribute('data-dropdown-menu'); // "artists" | "artist" | "style" | "contact"
+
+    if (group === 'artists')  return handlePickArtist(a.getAttribute('data-section'), 'artists');
+    if (group === 'artist')   return handlePickArtist(a.getAttribute('data-section'), 'gallery-artist');
+    if (group === 'style')    return handlePickStyleIndex(a.getAttribute('data-style-index'));
+    if (group === 'contact')  return handleContact(a.getAttribute('data-section'));
+  });
+
+  // ---------- Click ngoài để đóng menu ----------
+  document.addEventListener('click', function (e) {
+    if (!isMobile()) return;
+    if (!nav.classList.contains('open')) return;
+    if (!nav.contains(e.target) && e.target !== menuBtn) {
+      closeAll();
+    }
+  });
+
+  // ---------- PAGE-ENTRY RESTORE (mobile) ----------
+  if (isMobile()) {
+    // Artists
+    if (currentPage() === 'artists') {
+      const params = new URLSearchParams(window.location.search);
+      const paramArtist = params.get('artist');
+      const saved = localStorage.getItem('selectedArtist');
+      const artist = paramArtist || saved || 'banh';
+      waitUntil(() => window.renderArtistInfo && window.artistsData && window.artistsData[artist])
+        .then(() => {
+          if (window.banner?.switchArtist) window.banner.switchArtist(artist);
+          window.renderArtistInfo(artist);
+          setActiveInMenu('[data-dropdown-menu="artists"] .mobile-dropdown-item',
+            a => a.getAttribute('data-section') === artist);
+        })
+        .catch(() => {/* ignore */});
+    }
+
+    // Gallery (ưu tiên galleryTab)
+    if (currentPage() === 'gallery') {
+      const tab = localStorage.getItem('galleryTab'); // 'artist' | 'style'
+      const savedArtist = localStorage.getItem('currentArtist') || 'banh';
+      const savedStyleStr = localStorage.getItem('currentStyleIndex');
+      const hasSavedStyle = savedStyleStr !== null && savedStyleStr !== undefined;
+      const savedStyle = hasSavedStyle ? Number(savedStyleStr) : 0;
+
+      window.currentArtist = savedArtist;
+      window.currentStyleIndex = hasSavedStyle ? savedStyle : 0;
+
+      const renderByStyle = () => {
+        if (window.renderGalleryGridFromStyle) window.renderGalleryGridFromStyle(window.currentStyleIndex);
+        if (window.updateGalleryHeroContentFromStyle) window.updateGalleryHeroContentFromStyle(window.currentStyleIndex);
+      };
+      const renderByArtist = () => {
+        if (window.renderGalleryGrid) window.renderGalleryGrid(window.currentArtist);
+        if (window.updateGalleryHeroContent) window.updateGalleryHeroContent(window.currentArtist);
+      };
+
+      // nếu page script có init async, chờ nhẹ
+      if (typeof window.galleryInit === 'function') {
+        setTimeout(() => {
+          if (tab === 'style' || (tab !== 'artist' && hasSavedStyle)) renderByStyle();
+          else renderByArtist();
+        }, 50);
       } else {
-        arrowBtn.style.display = 'flex';
+        if (tab === 'style' || (tab !== 'artist' && hasSavedStyle)) renderByStyle();
+        else renderByArtist();
       }
-    });
-    observer.observe(mobileOnlyNav, { attributes: true, attributeFilter: ['class'] });
-  }
+    }
 
-}
+    // Contact
+    if (currentPage() === 'contact') {
+      const tab = localStorage.getItem('contactTab') || 'contact';
+      waitUntil(() => typeof window.renderContactTab === 'function')
+        .then(() => window.renderContactTab(tab))
+        .catch(() => {/* ignore */});
+    }
 
-// Đảm bảo khi load trang ở desktop, nút mobileArrowBtn sẽ bị xóa nếu có
-if (window.innerWidth > 768) {
-  const arrowBtn = document.getElementById('mobileArrowBtn');
-  if (arrowBtn) arrowBtn.remove();
-}
-
-// Đảm bảo nút mobileArrowBtn không xuất hiện trên desktop khi resize
-window.addEventListener('resize', function() {
-  if (window.innerWidth > 768) {
-    const arrowBtn = document.getElementById('mobileArrowBtn');
-    if (arrowBtn) arrowBtn.remove();
+    // Default highlight cho GALLERY → ARTIST (menu)
+    nav.querySelectorAll('[data-dropdown-menu="artist"] .mobile-dropdown-item')
+      .forEach(a => a.classList.toggle('active', a.getAttribute('data-section') === 'banh'));
   }
 });
 
-// Initialize vertical menu overlay when components loaded
-document.addEventListener('componentsLoaded', initVerticalMenuOverlay);
-
-// Debounce helper
+// ---------- debounce ----------
 function debounce(fn, delay) {
-  let timeout;
-  return function(...args) {
-    if (timeout) return;
-    fn.apply(this, args);
-    timeout = setTimeout(() => { timeout = null; }, delay);
-  };
-} 
+  let t;
+  return (...args) => { if (t) return; fn(...args); t = setTimeout(() => t = null, delay); };
+}

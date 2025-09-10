@@ -3,66 +3,92 @@
 .banner-img,
 .gallery-grid-item img,
 .gallery-banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.3s;
-  position: relative;
-  z-index: 1;
-  opacity: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.7s cubic-bezier(.4, 0, .2, 1), transform 0.3s;
+    position: relative;
+    z-index: 1;
+    opacity: 1;
 }
 
 @keyframes slideInLeft {
-  0% { opacity: 0; transform: translateX(-40px); }
-  100% { opacity: 1; transform: translateX(0); }
+    0% {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
-.slide-in-left { opacity: 0; transform: translateX(-40px); transition: none; }
-.slide-in-left.is-animated { animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) both; }
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: none;
+}
+
+.slide-in-left.is-animated {
+    animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
 
 /* ===== CONTENT MAIN CONTAINER - FIXED LOGIC ===== */
 #content-container {
     /* Base layout - desktop first */
     margin-top: 80px;
     margin-left: 0;
-    margin-right: 300px; /* Space cho right menu - CHỈ margin, KHÔNG padding */
-    height: calc(100vh - 80px); /* Thay đổi từ min-height thành height */
-    width: auto; /* Tự động tính toán */
+    margin-right: 300px;
+    /* Space cho right menu - CHỈ margin, KHÔNG padding */
+    height: calc(100vh - 80px);
+    /* Thay đổi từ min-height thành height */
+    width: auto;
+    /* Tự động tính toán */
     position: relative;
-    overflow: hidden; /* Thay đổi từ overflow-x thành overflow */
-    transition: margin-right 0.3s ease; /* Smooth transition khi collapse menu */
+    overflow: hidden;
+    /* Thay đổi từ overflow-x thành overflow */
+    transition: margin-right 0.3s ease;
+    /* Smooth transition khi collapse menu */
 }
 
 /* Container wrapper để control max-width */
 .content-wrapper {
-    max-width: 1620px; /* 1920px - 300px = 1620px available space */
+    max-width: 1620px;
+    /* 1920px - 300px = 1620px available space */
     margin: 0 auto;
-    padding: 0 20px; /* Breathing room */
+    padding: 0 20px;
+    /* Breathing room */
     width: 100%;
     box-sizing: border-box;
 }
 
 /* ===== HERO SECTION ===== */
 .hero-section {
-    height: 100%; /* Thay đổi để fit hoàn toàn trong container */
+    height: 100%;
+    /* Thay đổi để fit hoàn toàn trong container */
     width: 100%;
     display: flex;
     flex-direction: column;
     border-left: 0.5px solid white;
     position: relative;
     background-color: #000;
-    overflow: hidden; /* Đảm bảo không scroll */
+    overflow: hidden;
+    /* Đảm bảo không scroll */
 }
 
 .hero-section .hero-image {
-    flex: 3; /* Tăng từ flex: 1 thành flex: 3 để chiếm nhiều không gian hơn */
+    flex: 3;
+    /* Tăng từ flex: 1 thành flex: 3 để chiếm nhiều không gian hơn */
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #000;
     border-bottom: 0.5px solid white;
-    min-height: 400px; /* Tăng min-height */
+    min-height: 400px;
+    /* Tăng min-height */
     padding: 8px;
     box-sizing: border-box;
     position: relative;
@@ -81,7 +107,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+    transition: opacity 0.7s cubic-bezier(.4, 0, .2, 1);
     z-index: 1;
     display: block !important;
     position: relative;
@@ -89,6 +115,7 @@
     padding: 0;
     will-change: auto;
 }
+
 .banner-img.active {
     opacity: 1;
     pointer-events: auto;
@@ -113,17 +140,19 @@
     will-change: transform, opacity;
     backface-visibility: hidden;
 }
+
 .hero-image img.active {
     opacity: 1;
     z-index: 2;
 }
+
 .hero-image img:first-child {
     display: block;
 }
 
 .hero-image img:hover {
-  /* transform: scale(1.02); */
-  transform: none;
+    /* transform: scale(1.02); */
+    transform: none;
 }
 
 .hero-section .hero-content {
@@ -172,7 +201,7 @@ body[data-page="home"] .hero-section .hero-content {
     letter-spacing: 1px;
     transition: all 0.3s ease;
     white-space: nowrap;
-    margin-left: 20px;
+    margin-left: 71px;
 }
 
 .hero-section .hero-instagram-btn:hover {
@@ -224,9 +253,11 @@ body[data-page="home"] .hero-section .hero-content {
     padding: 35px 40px 0 40px;
     background: none;
     border-bottom: none;
-    min-height: 200px; /* Đảm bảo đủ không gian cho contact info */
+    min-height: 200px;
+    /* Đảm bảo đủ không gian cho contact info */
     overflow: visible;
-    flex: 3; /* Match hero-image flex ratio */
+    flex: 3;
+    /* Match hero-image flex ratio */
 }
 
 .hero-section.hero-contact .contact-block {
@@ -234,7 +265,7 @@ body[data-page="home"] .hero-section .hero-content {
 }
 
 .hero-section.hero-contact .contact-heading {
-    
+
     font-size: 1.2rem;
     margin-bottom: 8px;
     text-transform: uppercase;
@@ -309,9 +340,11 @@ body[data-page="home"] .hero-section .hero-content {
 
 /* Responsive tweaks nếu cần */
 @media (max-width: 900px) {
-  .hero-section .hero-content, .hero-section.hero-contact .hero-info {
-    padding: 20px 10px;
-  }
+
+    .hero-section .hero-content,
+    .hero-section.hero-contact .hero-info {
+        padding: 20px 10px;
+    }
 }
 
 /* ===== COMMON SECTION STYLES ===== */
@@ -358,7 +391,8 @@ body[data-page="home"] .hero-section .hero-content {
     overflow: hidden;
     transition: all 0.3s ease;
     position: relative;
-    border-radius: 0; /* Clean edges */
+    border-radius: 0;
+    /* Clean edges */
 }
 
 .artist-card:hover {
@@ -428,7 +462,8 @@ body[data-page="home"] .hero-section .hero-content {
     position: relative;
     overflow: hidden;
     border-radius: 0;
-    min-height: 44px; /* Touch friendly */
+    min-height: 44px;
+    /* Touch friendly */
 }
 
 .book-consultation-btn:hover {
@@ -444,7 +479,7 @@ body[data-page="home"] .hero-section .hero-content {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s ease;
 }
 
@@ -481,11 +516,12 @@ body[data-page="home"] .hero-section .hero-content {
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    min-height: 36px; /* Touch friendly */
+    min-height: 36px;
+    /* Touch friendly */
     border-radius: 0;
 }
 
-.filter-btn.active, 
+.filter-btn.active,
 .filter-btn:hover {
     background-color: #ff3333;
     border-color: #ff3333;
@@ -501,7 +537,8 @@ body[data-page="home"] .hero-section .hero-content {
 
 .gallery-item {
     position: relative;
-    aspect-ratio: 1; /* Perfect squares */
+    aspect-ratio: 1;
+    /* Perfect squares */
     overflow: hidden;
     cursor: pointer;
     background-color: #222;
@@ -533,7 +570,7 @@ body[data-page="home"] .hero-section .hero-content {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
     color: white;
     padding: 20px;
     transform: translateY(100%);
@@ -851,7 +888,8 @@ body[data-page="home"] .hero-section .hero-content {
     transition: all 0.3s ease;
     box-sizing: border-box;
     border-radius: 0;
-    min-height: 44px; /* Touch friendly */
+    min-height: 44px;
+    /* Touch friendly */
 }
 
 .form-group input::placeholder,
@@ -934,7 +972,10 @@ body[data-page="home"] .hero-section .hero-content {
 }
 
 /* Gộp style chung cho các button, card, title, description */
-.book-consultation-btn, .load-more-btn, .claim-deal-btn, .submit-btn {
+.book-consultation-btn,
+.load-more-btn,
+.claim-deal-btn,
+.submit-btn {
     background-color: #ff3333;
     color: white;
     border: none;
@@ -948,7 +989,10 @@ body[data-page="home"] .hero-section .hero-content {
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
-.book-consultation-btn:hover, .load-more-btn:hover, .claim-deal-btn:hover, .submit-btn:hover {
+.book-consultation-btn:hover,
+.load-more-btn:hover,
+.claim-deal-btn:hover,
+.submit-btn:hover {
     background-color: #e62929;
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(255, 51, 51, 0.10);
@@ -963,7 +1007,9 @@ body[data-page="home"] .hero-section .hero-content {
     text-transform: uppercase;
 }
 
-.artist-card, .gallery-item, .deal-card {
+.artist-card,
+.gallery-item,
+.deal-card {
     background-color: #111;
     border: 1px solid #333;
     overflow: hidden;
@@ -971,8 +1017,223 @@ body[data-page="home"] .hero-section .hero-content {
     transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
-.artist-card:hover, .gallery-item:hover, .deal-card:hover {
+.artist-card:hover,
+.gallery-item:hover,
+.deal-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 2px 8px rgba(255, 51, 51, 0.10);
     border-color: #ff3333;
+}
+
+/* Banner dots cho HOME – giống Artists */
+.hero-section.hero-home .banner-nav {
+    position: absolute;
+    bottom: 210px;
+    left: 98%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 10;
+}
+
+.hero-section.hero-home .banner-dot {
+    width: 2px;
+    height: 30px;
+    border-radius: 30px;
+    background: #fff;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.hero-section.hero-home .banner-dot.active {
+    opacity: 1;
+    background: #ff3333;
+}
+
+/* Banner dots cho HOME – giống Artists */
+.hero-section.hero-home .banner-nav {
+    position: absolute;
+    bottom: 210px;
+    left: 98%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 10;
+}
+
+.hero-section.hero-home .banner-dot {
+    width: 2px;
+    height: 30px;
+    border-radius: 30px;
+    background: #fff;
+    opacity: .5;
+    cursor: pointer;
+    transition: opacity .3s;
+}
+
+.hero-section.hero-home .banner-dot.active {
+    opacity: 1;
+    background: #ff3333;
+}
+
+/* === Popup Modal (global, dùng chung cho Home/Artists/Gallery) === */
+.gallery-modal {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px)
+}
+
+.gallery-modal.active {
+    display: flex;
+    animation: modalFadeIn .3s ease-out
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(.9)
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1)
+    }
+}
+
+.gallery-modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible
+}
+
+.gallery-modal-image {
+    max-width: 70vw;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 8px
+}
+
+.gallery-modal-close {
+    position: absolute;
+    top: -56px;
+    right: 0;
+    background: rgba(255, 255, 255, .2);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, color .2s
+}
+
+.gallery-modal-close:hover {
+    background: #ff3333;
+    color: #fff
+}
+
+.gallery-modal-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, .5);
+    color: #fff;
+    border: none;
+    font-size: 2.2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, color .2s, box-shadow .2s
+}
+
+.gallery-modal-arrow:hover {
+    background: #ff3333;
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .25)
+}
+
+.gallery-modal-arrow-left {
+    left: -56px
+}
+
+.gallery-modal-arrow-right {
+    right: -56px
+}
+
+@media (max-width:768px) {
+    .gallery-modal-image {
+        max-width: 95vw;
+        max-height: 80vh
+    }
+
+    .gallery-modal-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.8rem
+    }
+
+    .gallery-modal-arrow-left {
+        left: -50px
+    }
+
+    .gallery-modal-arrow-right {
+        right: -50px
+    }
+
+    .gallery-modal-close {
+        top: -50px;
+        width: 36px;
+        height: 36px;
+        font-size: 20px
+    }
+}
+
+
+@media (max-width: 600px) {
+    .hero-content>div:first-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px;
+    }
+}
+
+.gallery-modal-content {
+    position: relative !important;
+    overflow: visible !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
+    display: flex !important
+;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.gallery-modal-image {
+    max-width: 70vw !important;
+    max-height: 70vh !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
 }

@@ -83,6 +83,14 @@ function renderArtistInfo(artistId) {
 }
 window.renderArtistInfo = renderArtistInfo;
 
+// ... nguyên phần artistsData và function renderArtistInfo ở trên ...
+
+window.artistsData = artistsData;
+window.renderArtistInfo = renderArtistInfo;
+document.dispatchEvent(new Event('artistsDataReady'));
+
+
+
 // Function to restore artist state
 function restoreArtistState() {
     // Always default to 'banh' on page load/refresh

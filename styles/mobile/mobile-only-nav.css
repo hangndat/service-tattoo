@@ -1,11 +1,12 @@
-/* Đảm bảo menu mobile luôn ẩn trên desktop */
+/* Ẩn overlay trên desktop */
 .mobile-only-nav { display: none !important; }
 
+/* ============ MOBILE OVERLAY MENU ============ */
 @media (max-width: 768px) {
   .mobile-only-nav {
     display: flex !important;
     position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
+    inset: 0;            /* top/right/bottom/left: 0 */
     width: 100vw;
     height: 100vh;
     background: #000 !important;
@@ -13,37 +14,43 @@
     flex-direction: column;
     padding: 0;
     margin: 0;
-    transition: transform 0.3s;
-    transform: translateX(100%);
-    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    transform: translateX(100%);    /* slide in từ phải */
+    box-shadow: -2px 0 8px rgba(0,0,0,.2);
+
+    /* cho panel SCROLL khi dài */
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
-  .mobile-only-nav.open {
-    transform: translateX(0);
-  }
+  .mobile-only-nav.open { transform: translateX(0); }
+
   .mobile-nav-header {
     color: #fff;
     font-size: 20px;
-    padding: 24px 20px 12px 20px;
+    padding: 24px 20px 12px;
     border-bottom: 1px solid #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #000;
   }
+
   .mobile-menu-close {
     background: none;
     border: none;
     color: #fff;
     font-size: 32px;
     cursor: pointer;
+    touch-action: manipulation;
   }
+
   .mobile-nav-item {
     color: #fff;
     text-decoration: none;
     padding: 24px 20px;
     border-bottom: 1px solid #333;
     font-size: 22px;
-    /* font-family inherited from main.css */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,27 +58,20 @@
     font-weight: 400;
     letter-spacing: 1px;
   }
-  .mobile-nav-item:hover {
-    background: #111;
-  }
+  .mobile-nav-item:hover { background: #111; }
   .mobile-nav-item.active {
     background: #ff3333 !important;
     color: #fff;
   }
   .mobile-nav-item.active .menu-number,
-  .mobile-nav-item.active .menu-text {
-    color: #fff;
-  }
-  
-  /* Active state for mobile vertical overlay menus */
-  .mobile-vertical-overlay .mobile-nav-item.active {
+  .mobile-nav-item.active .menu-text { color: #fff; }
+
+  /* Toggle lv1 khi active cũng đỏ (match JS .active) */
+  .mobile-dropdown-toggle.active{
     background: #ff3333 !important;
     color: #fff;
   }
-  .mobile-vertical-overlay .mobile-nav-item.active .menu-number,
-  .mobile-vertical-overlay .mobile-nav-item.active .menu-text {
-    color: #fff;
-  }
+
   .menu-number {
     font-size: 20px;
     font-weight: 600;
@@ -89,26 +89,7 @@
     margin-left: 16px;
   }
 
-  .mobile-vertical-overlay {
-    display: none;
-    position: fixed;
-    top: 0; right: 0; bottom: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #000 !important;
-    z-index: 12000;
-    flex-direction: column;
-    padding: 0;
-    margin: 0;
-    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-    transform: translateX(100%);
-    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-  }
-  .mobile-vertical-overlay.open {
-    display: flex;
-    transform: translateX(0);
-  }
-  /* Ẩn nút mũi tên khi menu ☰ mở */
+  /* Ẩn nút mũi tên khi overlay mở (nếu có) */
   #mobileOnlyNav.open ~ #mobileArrowBtn,
   #mobileOnlyNav.open ~ .mobile-arrow-btn,
   .mobile-only-nav.open ~ #mobileArrowBtn,
@@ -116,8 +97,8 @@
     display: none !important;
   }
 }
+
+/* Không render overlay trên desktop */
 @media (min-width: 769px) {
-  .mobile-vertical-overlay {
-    display: none !important;
-  }
-} 
+  .mobile-vertical-overlay { display: none !important; }
+}

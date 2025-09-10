@@ -23,21 +23,69 @@
     <!-- appear real-time with id datetime to add function by js -->
     <div class="datetime" id="datetime"> </div>
     
-    <button class="mobile-menu-toggle" id="mobileMenuToggle">
-        ☰
-    </button>
+   <!-- Nút hamburger giữ nguyên -->
+<button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
 
-    <!-- Mobile-only navigation, hoàn toàn tách biệt desktop -->
-    <nav class="mobile-only-nav" id="mobileOnlyNav">
-        <div class="mobile-nav-header">
-            <span>MENU</span>
-            <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
-        </div>
-        <a href="../index.html" class="mobile-nav-item"><span class="menu-number">01</span> <span class="menu-text">STUDIO</span></a>
-        <a href="../artist.html" class="mobile-nav-item"><span class="menu-number">02</span> <span class="menu-text">ARTISTS</span></a>
-        <a href="../gallery.html" class="mobile-nav-item"><span class="menu-number">03</span> <span class="menu-text">GALLERY</span></a>
-        <!-- <a href="../flash-deal.html" class="mobile-nav-item"><span class="menu-number">04</span> <span class="menu-text">SALE FLASH</span></a> -->
-        <a href="../contact.html" class="mobile-nav-item"><span class="menu-number">04</span> <span class="menu-text">CONTACT US</span></a>
-        
-    </nav>
+<!-- 1 MENU DUY NHẤT -->
+<nav class="mobile-only-nav" id="mobileOnlyNav">
+  <div class="mobile-nav-header">
+    <span>MENU</span>
+    <button class="mobile-menu-close" id="mobileMenuClose">&times;</button>
+  </div>
+
+  <!-- STUDIO: link đơn -->
+  <a href="../index.html" class="mobile-nav-item">
+    <span class="menu-number">01</span> <span class="menu-text">STUDIO</span>
+  </a>
+
+  <!-- ARTISTS: dropdown -->
+  <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="artists">
+    <span class="menu-number">02</span> <span class="menu-text">ARTISTS</span>
+  </div>
+  <div class="mobile-dropdown-menu" data-dropdown-menu="artists">
+    <a href="#" class="mobile-dropdown-item" data-section="banh">BANH</a>
+    <a href="#" class="mobile-dropdown-item" data-section="nam-n2n">NAM - N2N</a>
+    <a href="#" class="mobile-dropdown-item" data-section="trinh-reklezz">TRINH - REKLEZZ</a>
+  </div>
+
+  <!-- GALLERY: dropdown 2 tầng (giữ đúng cấu trúc cũ) -->
+  <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="gallery">
+    <span class="menu-number">03</span> <span class="menu-text">GALLERY</span>
+  </div>
+  <div class="mobile-dropdown-menu" data-dropdown-menu="gallery">
+    <!-- Nhóm ARTIST -->
+    <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="artist">
+      <span class="menu-number">3.1</span> <span class="menu-text">ARTIST</span>
+    </div>
+    <div class="mobile-dropdown-menu" data-dropdown-menu="artist">
+      <a href="#" class="mobile-dropdown-item" data-section="banh">BANH</a>
+      <a href="#" class="mobile-dropdown-item" data-section="nam-n2n">NAM - N2N</a>
+      <a href="#" class="mobile-dropdown-item" data-section="trinh-reklezz">TRINH - REKLEZZ</a>
+    </div>
+    <!-- Nhóm STYLE -->
+    <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="style">
+      <span class="menu-number">3.2</span> <span class="menu-text">STYLE</span>
+    </div>
+    <div class="mobile-dropdown-menu" data-dropdown-menu="style">
+      <a href="#" class="mobile-dropdown-item" data-style-index="0">01 OLD SCHOOL - TRADITIONAL</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="1">02 NEO TRADITIONAL</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="2">03 REALISTIC</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="3">04 FINE LINE</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="4">05 BIG WORK</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="5">06 SMALL WORK</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="6">07 BLACKWORK</a>
+      <a href="#" class="mobile-dropdown-item" data-style-index="7">08 ASIA TATTOO</a>
+    </div>
+  </div>
+
+  <!-- CONTACT: dropdown -->
+  <div class="mobile-nav-item mobile-dropdown-toggle" data-dropdown="contact">
+    <span class="menu-number">04</span> <span class="menu-text">CONTACT</span>
+  </div>
+  <div class="mobile-dropdown-menu" data-dropdown-menu="contact">
+    <a href="#" class="mobile-dropdown-item" data-section="contact-form">CONTACT US</a>
+    <a href="#" class="mobile-dropdown-item" data-section="google-map">GOOGLE MAP</a>
+  </div>
+</nav>
+
 </header>
