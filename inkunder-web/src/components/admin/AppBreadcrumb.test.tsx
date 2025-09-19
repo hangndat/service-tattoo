@@ -1,0 +1,28 @@
+// src/components/admin/AppBreadcrumb.test.tsx
+import { render, screen } from '@testing-library/react'
+import { LinkProps } from 'next/link';
+import { ReactNode } from 'react';
+
+import { mockUsePathname } from '@/test/utils/mockNextNavigation'
+
+vi.mock('next/link', () => ({
+  default: ({ href, children }: LinkProps & { children: ReactNode }) => (
+    <a href={typeof href === 'string' ? href : String(href)}>{children}</a>
+  ),
+}));
+
+beforeEach(() => {
+    vi.resetModules(); // clear module cache để mock có hiệu lực
+});
+
+
+describe('AppBreadcrumb', () => {
+  it('tạo breadcrumb đúng theo đường hiện tại', async () => {
+    mockUsePathname('/admin/posts/create')               // 1) mock trước
+    const { default: AppBreadcrumb } = await import('./AppBreadcrumb') // 2) rồi mới import component
+    render(<AppBreadcrumb />)
+    expect(screen.getByText('Admin')).toBeInTheDocument()
+    expect(screen.getByText('Bài viết')).toBeInTheDocument()
+    expect(screen.getByText('Tạo mới')).toBeInTheDocument()
+  })
+})
