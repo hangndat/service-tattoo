@@ -1,4 +1,11 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# 1) Tự động sửa lỗi format/import
+pnpm -C inkunder-web lint --fix
 
-pnpm -C inkunder-web lint
+# 2) Re-stage các file vừa được auto-fix để commit kèm luôn
+git -C inkunder-web add .
+
+# 3) Lint lại, fail nếu còn warning/error
+pnpm -C inkunder-web lint --max-warnings=0
+
+# 4) Chạy test, fail nếu test fail
+pnpm -C inkunder-web test

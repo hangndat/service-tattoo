@@ -52,6 +52,6 @@ export default [
       // Không export default anonymous array/object
       "import/no-anonymous-default-export": "warn",
     },
-    ignores: ['node_modules/**', '.next/**', 'dist/**', '**/*.d.ts'], // thay cho .eslintignore cũ
+    ignores: ["node_modules/**", ".next/**", "dist/**", "**/*.d.ts"], // thay cho .eslintignore cũ
   },
 ];
