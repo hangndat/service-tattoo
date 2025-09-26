@@ -18,7 +18,7 @@ beforeEach(() => {
 describe("Header", () => {
   it("render và làm nổi mục đang ở", async () => {
     mockUsePathname("/"); // 1) mock trước
-    const { default: Header } = await import("./Header"); // 2) import sau
+    const { default: Header } = await import("../components/site/Header"); // 2) import sau
     render(<Header />);
 
     const homeLink = screen.getByText("Trang chủ");
@@ -27,7 +27,7 @@ describe("Header", () => {
 
   it("mở menu mobile khi bấm nút", async () => {
     mockUsePathname("/about");
-    const { default: Header } = await import("./Header");
+    const { default: Header } = await import("../components/site/Header");
     render(<Header />);
 
     fireEvent.click(screen.getByRole("button", { name: /mở menu/i }));

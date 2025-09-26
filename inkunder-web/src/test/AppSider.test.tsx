@@ -17,11 +17,11 @@ beforeEach(() => {
 
 describe("AppSider", () => {
   it("chọn đúng mục theo đường hiện tại", async () => {
-    mockUsePathname("/admin/posts"); // 1) mock trước
-    const { default: AppSider } = await import("./AppSider"); // 2) rồi mới import component
+    mockUsePathname("/admin"); // 1) mock trước
+    const { default: AppSider } = await import("@/components/admin/AppSider"); // 2) rồi mới import component
     await act(async () => {
       render(<AppSider />);
     });
-    expect(screen.getByText("Bài viết")).toBeInTheDocument();
+    expect(screen.getByText("Dashboard")).toBeInTheDocument();
   });
 });

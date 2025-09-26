@@ -12,8 +12,8 @@ export default function Header() {
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   return (
-    <header className="border-b">
-      <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+    <header className="border-t border-r border-l">
+      <div className="w-full py-3 flex justify-between px-4">
         <Link href="/">Ink Under Skin</Link>
 
         <button aria-label="Mở menu" className="md:hidden" onClick={() => setOpen((v) => !v)}>
@@ -24,15 +24,23 @@ export default function Header() {
           <Link href="/" className={isActive("/") ? "font-medium underline" : ""}>
             Trang chủ
           </Link>
-          <Link href="/about" className={isActive("/about") ? "font-medium underline" : ""}>
-            Giới thiệu
+          <Link href="/artists" className={isActive("/artists") ? "font-medium underline" : ""}>
+            Artists
           </Link>
-          <Link href="/services" className={isActive("/services") ? "font-medium underline" : ""}>
-            Dịch vụ
+          <Link href="/shop" className={isActive("/shop") ? "font-medium underline" : ""}>
+            Shop
           </Link>
-          <Link href="/contact" className={isActive("/contact") ? "font-medium underline" : ""}>
-            Liên hệ
+          <Link href="/gallery" className={isActive("/gallery") ? "font-medium underline" : ""}>
+            Gallery
           </Link>
+          <Link href="/booking" className={isActive("/booking") ? "font-medium underline" : ""}>
+            Booking
+          </Link>
+          <Link href="/cart" className={isActive("/cart") ? "font-medium underline" : ""}>
+            Cart
+          </Link>
+
+
           <Link href="/admin" className={isActive("/admin") ? "font-medium underline" : ""}>
             Admin
           </Link>

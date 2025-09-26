@@ -17,7 +17,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Header />
-      <main className="min-h-dvh">{children}</main>
+      <main className="min-h-svh border ">{children}</main>
       <Footer />
     </>
   );

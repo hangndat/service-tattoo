@@ -17,15 +17,14 @@ beforeEach(() => {
 
 describe("AppBreadcrumb", () => {
   it("tạo breadcrumb đúng theo đường hiện tại", async () => {
-    mockUsePathname("/admin/posts/create"); // 1) mock trước
-    const { default: AppBreadcrumb } = await import("./AppBreadcrumb"); // 2) rồi mới import component
+    mockUsePathname("/admin/porfolio"); // 1) mock trước
+    const { default: AppBreadcrumb } = await import("@/components/admin/AppBreadcrumb"); // 2) rồi mới import component
     await act(async () => {
       render(<AppBreadcrumb />);
     });
 
 
     expect(screen.getByText("Admin")).toBeInTheDocument();
-    expect(screen.getByText("Bài viết")).toBeInTheDocument();
-    expect(screen.getByText("Tạo mới")).toBeInTheDocument();
+    expect(screen.getByText("porfolio")).toBeInTheDocument();
   });
 });

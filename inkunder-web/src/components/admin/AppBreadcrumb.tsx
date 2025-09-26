@@ -4,11 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const labelMap: Record<string, string> = {
-  admin: "Admin",
-  posts: "Bài viết",
-  settings: "Cài đặt",
-  create: "Tạo mới",
-  edit: "Chỉnh sửa",
+  admin: 'Admin',
+  adminArtists: 'Nghệ sỹ',
+  adminPorfolio: 'Thông tin',
+  adminProducts: 'Sản Phẩm',
+  adminBookings: 'Đặt lịch',
+  adminAnalytics: 'Thống kê'
 };
 
 export default function AppBreadcrumbs() {
